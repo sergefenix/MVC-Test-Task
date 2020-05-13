@@ -1,13 +1,13 @@
 <?php
 
-spl_autoload_register(function ($className) {
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+define('ROOT', __FILE__);
+session_start();
 
-  if ('Syste/' . $className . '.php') {
-    require_once 'Syste/' . $className . '.php';
-  } else if ('Controllers/' . $className . '.php') {
-    require_once 'Controllers/' . $className . '.php';
-  } else if ('Models/' . $className . '.php') {
-    require_once 'Models/' . $className . '.php';
-  }
+require_once ('Components/AutoloadComponent.php');
+$autoload = new AutoloadComponent();
+$autoload->Autoload();
 
-});
+$router = new RouteComponent();
+$router->run();

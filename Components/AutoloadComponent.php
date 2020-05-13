@@ -2,28 +2,26 @@
 
 class AutoloadComponent
 {
-    private $paths = [];
+    private $paths;
 
     public function __construct()
     {
         $this->paths = [
-            '/Controllers/',
-            '/Models/',
-            '/Components/'
+            'Controllers/',
+            'Models/',
+            'Components/'
         ];
     }
 
-    public function Autoload($class_name)
+    public function Autoload()
     {
         spl_autoload_register(function ($class_name) {
-
-        });
-
-        foreach ($this->paths as $path) {
-            $path = ROOT . $path . $class_name . '.php';
-            if (is_file($path)) {
-                require_once $path;
+            foreach ($this->paths as $path) {
+                $path = $path . $class_name . '.php';
+                if (is_file($path)) {
+                    require_once $path;
+                }
             }
-        }
+        });
     }
 }
