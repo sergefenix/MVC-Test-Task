@@ -7,10 +7,10 @@ class AutoloadComponent
     public function __construct()
     {
         $this->paths = [
-            'Controllers/',
-            'Models/',
-            'Components/',
-            'System/'
+            './Controllers/',
+            './Models/',
+            './Components/',
+            './System/',
         ];
     }
 
@@ -24,5 +24,7 @@ class AutoloadComponent
                 }
             }
         });
+
+        new RouteComponent();
     }
 }

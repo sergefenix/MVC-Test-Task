@@ -1,13 +1,13 @@
 <?php
 
 RouteComponent::set('', function () {
-    DefaultController::create();
+    DefaultController::home('home');
 });
 
-RouteComponent::set('home', function () {
-    DefaultController::create();
+RouteComponent::set('create', function () {
+    DefaultController::create('create');
 });
 
-RouteComponent::set('tasks', function () {
-    DefaultController::create();
+RouteComponent::set('edit', function () {
+    DefaultController::edit('edit');
 });

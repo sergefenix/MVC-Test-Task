@@ -10,5 +10,3 @@ require_once ('Components/AutoloadComponent.php');
 $autoload = new AutoloadComponent();
 $autoload->Autoload();
 
-$router = new RouteComponent();
-//$router->run();
