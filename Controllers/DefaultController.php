@@ -1,7 +1,9 @@
 <?php
 
-
-class DefaultController
+class DefaultController extends Controller
 {
+    public static function create()
+    {
 
+    }
 }

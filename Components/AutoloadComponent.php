@@ -9,7 +9,8 @@ class AutoloadComponent
         $this->paths = [
             'Controllers/',
             'Models/',
-            'Components/'
+            'Components/',
+            'System/'
         ];
     }
 
