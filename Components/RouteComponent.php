@@ -25,11 +25,11 @@ class RouteComponent
     public static function set($route, $function)
     {
         self::$routes[] = $route;
+
         if ($_SERVER['REQUEST_URI'] === "/TaskManager/$route") {
             $function->__invoke();
-        } else {
-            require_once ("./Views/404.php");
         }
+            //require_once ("./Views/404.php");
     }
 
 }
