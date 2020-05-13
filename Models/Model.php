@@ -1,10 +1,6 @@
 <?php
 
-
-class UserController extends Controller
+class Model
 {
-
     public function __construct() { }
-
-
 }

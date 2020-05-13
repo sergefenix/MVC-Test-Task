@@ -18,7 +18,7 @@ class AutoloadComponent
     {
         spl_autoload_register(function ($class_name) {
             foreach ($this->paths as $path) {
-                $path = $path . $class_name . '.php';
+                $path = $path . "$class_name.php";
                 if (is_file($path)) {
                     require_once $path;
                 }
