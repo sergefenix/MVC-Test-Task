@@ -1,5 +1,7 @@
 <?php
 
+namespace Components;
+
 class AutoloadComponent
 {
     private $paths;
@@ -7,10 +9,9 @@ class AutoloadComponent
     public function __construct()
     {
         $this->paths = [
-            './Controllers/',
-            './Models/',
-            './Components/',
-            './System/',
+            './App/Controllers/',
+            './App/Models/',
+            './App/Components/'
         ];
     }
 
@@ -25,6 +26,6 @@ class AutoloadComponent
             }
         });
 
-        new RouteComponent();
+        require('Config/routes.php');
     }
 }

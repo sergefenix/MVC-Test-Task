@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Controllers;
+
 class DefaultController extends Controller
 {
     public static function home($viewName)

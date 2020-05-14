@@ -1,17 +1,24 @@
 <?php
 
-RouteComponent::set('', function () {
-    DefaultController::home('home');
+use Components\RouteComponent;
+
+$router = new AltoRouter();
+
+$router->map('get', '/', function() {
+    $this->routingController('DefaultController', 'home');
 });
 
-RouteComponent::set('create', function () {
-    DefaultController::create('create');
-});
+//$router->map('get', '/create', function() {
+//    $this->routingController('DefaultController', 'home');
+//});
+//
+//$router->map('post', '/edit', function() {
+//    $this->routingController('DefaultController', 'home');
+//});
+//
+//$router->map('post', '/add', function() {
+//    $this->routingController('DefaultController', 'home');
+//});
 
-RouteComponent::set('edit', function () {
-    DefaultController::edit('edit');
-});
-
-RouteComponent::set('404', function () {
-    DefaultController::error('404');
-});
+$rout = new RouteComponent($router);
+$rout->routing();

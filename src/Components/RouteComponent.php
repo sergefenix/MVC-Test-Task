@@ -1,35 +1,58 @@
 <?php
 
+namespace Components;
+
 class RouteComponent
 {
-    /**
-     * Associative array of routes (the routing table)
-     * @var array
-     */
-    public static $routes = [];
 
-    /**
-     * Parameters from the matched route
-     * @var array
-     */
     protected $params = [];
+    private $routes;
 
     /**
      * RouteComponent constructor.
      */
-    public function __construct()
+    public function __construct($router)
     {
-        require('Config/routes.php');
+        $this->routes = $router;
     }
 
-    public static function set($route, $function)
-    {
-        self::$routes[] = $route;
 
-        if ($_SERVER['REQUEST_URI'] === "/TaskManager/$route") {
-            $function->__invoke();
+    public function routing()
+    {
+        $match = $this->router->match();
+        $target = $match['target'];
+        $param = $match['params'];
+
+        if ($match && is_callable($match['target'])) {
+            call_user_func_array($match['target'], $match['params']);
+        } else {
+            // no route was matched
+            $this->NotFound();
         }
-            //require_once ("./Views/404.php");
+    }
+
+    //Не доработанная функция на ошибок
+    public function routingController($controllerName, $action, $param = null)
+    {
+        $controllerName = "App\\Controller\\" . $controllerName;
+        if (class_exists($controllerName)) {
+            $controller = new $controllerName;
+            if (method_exists($controller, $action)) {
+                if (is_null($param)) {
+                    $controller->$action();
+                } else {
+                    $controller->$action($param);
+                }
+            }
+        } else {
+            $this->NotFound();
+        }
+    }
+
+    public function NotFound()
+    {
+        header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found", true, 404);
+        include('resources/views/404.php');
     }
 
 }
