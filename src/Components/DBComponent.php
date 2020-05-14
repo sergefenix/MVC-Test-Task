@@ -1,5 +1,6 @@
 <?php
 
+namespace Components;
 
 class DBComponent
 {
@@ -8,10 +9,15 @@ class DBComponent
         $paramsPath = 'Config/db_params.php';
         $params = include($paramsPath);
 
-        $dsn = "mysql:host={$params['host']};dbname={$params['dbname']}";
-        $db = new PDO($dsn, $params['user'], $params['password']);
-        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $db->exec("set names utf8");
+        try {
+            $dsn = "mysql:host={$params['host']};dbname={$params['dbname']}";
+            $db = new PDO($dsn, $params['user'], $params['password']);
+            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $db->exec("set names utf8");
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            die("A database error was encountered");
+        }
 
         return $db;
     }

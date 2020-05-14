@@ -7,16 +7,16 @@ use Twig_Loader_Filesystem;
 
 class TwigComponent
 {
-    private $twig;
+    private $template;
 
     public function __construct($template, $params)
     {
         $loader = new Twig_Loader_Filesystem($template);
-        $this->twig = new Twig_Environment($loader, $params);
+        $this->template = new Twig_Environment($loader, $params);
     }
 
     public function render($template, $params = [])
     {
-        echo $this->twig->render($template, $params);
+        echo $this->template->render($template, $params);
     }
 }
