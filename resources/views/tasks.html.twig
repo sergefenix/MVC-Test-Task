@@ -1,0 +1,96 @@
+{% extends 'default.html.twig' %}
+{% block title %}Задачи{% endblock %}
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+{% block content %}
+    <div>
+        <form id="feedback" enctype="multipart/form-data" action="add" method="post" role="form">
+            <div class="form-group">
+                <label for="exampleInputEmail">Email</label>
+                <input type="email" class="form-control" name="exampleInputEmail" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+                <label for="text">Текст задачи</label>
+                <textarea name="text" class="form-control" rows="3"></textarea>
+            </div>
+
+            <div class="form-group">
+                <input type="file" name="fupload"/>
+            </div>
+            <a href="#" class="js-preview btn btn-default">Предварительный просмотр</a>
+            <button type="submit" class="btn btn-primary">Отправить</button>
+        </form>
+    </div>
+
+    <div>
+        <h4>Сортировка</h4>
+        <p>Email:
+           <a href="/ascemail">по возрастанию</a>, <a href="/descemail">по убыванию</a>
+           Дате:
+            <a href="/ascdate">по возрастанию</a>, <a href="/descdate">по убыванию</a>
+        </p>
+    </div>
+
+    <div id="preview" class="panel panel-default" style="display:none">
+        <div class="panel-heading"></div>
+        <div class="panel-body"></div>
+        <img src="" class="img-rounded" width=320 height=240>
+    </div>
+
+    {% for comment in comments %}
+        {{ include('comment.html.twig') }}
+    {% endfor %}
+
+    <script>
+        $(document).ready(function() {
+            $('.js-preview').click(function() {
+                var now = new Date();
+                $('#preview .panel-heading').html(function() {
+                    var email = $('[name=exampleInputEmail]').val();
+                    var date = now.toString();
+                    return email + ' ' + date;
+                });
+                $('#preview .panel-body').html($('[name=text]').val());
+                $('#preview').show();
+                return false;
+            });
+
+            $('#feedback').bootstrapValidator({
+                // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    exampleInputEmail: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Емаил адрес требуется и не может быть пустым'
+                            },
+                            emailAddress: {
+                                message: 'Это некорректный емаил адрес'
+                            }
+                        }
+                    },
+                    text: {
+                        validators: {
+                            stringLength: {
+                                min: 10,
+                                max: 3000,
+                                message: 'Введите описание задачи от 10 до 3000 символов'
+                            },
+                            notEmpty: {
+                                message: 'Введите описание задачи'
+                            }
+                        }
+                    }
+
+                }
+            });
+
+        });
+    </script>
+
+{% endblock %}

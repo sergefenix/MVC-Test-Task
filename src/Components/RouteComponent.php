@@ -2,56 +2,69 @@
 
 namespace Components;
 
+use AltoRouter;
+
 class RouteComponent
 {
-
-    protected $params = [];
     private $router;
 
     /**
      * RouteComponent constructor.
      */
-    public function __construct($router)
+    public function __construct()
     {
-        $this->router = $router;
+        $this->router = new AltoRouter();
+
+        $this->router->map('get', '/TaskManager/', function () {
+            $this->createRoute('DefaultController', 'home');
+        });
     }
 
-
-    public function routing()
+    /**
+     * RouteComponent creator routes
+     */
+    public function createRoutes()
     {
         $match = $this->router->match();
-        $target = $match['target'];
         $param = $match['params'];
+        $target = $match['target'];
 
-        if ($match && is_callable($match['target'])) {
-            call_user_func_array($match['target'], $match['params']);
+        if ($match && is_callable($target)) {
+            call_user_func_array($target, $param);
         } else {
-            // no route was matched
-            $this->NotFound();
+            $this->create404();
         }
     }
 
-    //Не доработанная функция на ошибок
-    public function routingController($controllerName, $action, $param = null)
+    /**
+     * @param $controllerName
+     * @param $action
+     * @param null $param
+     */
+    public function createRoute($controllerName, $action, $param = null)
     {
-        $controllerName = "App\\Controller\\" . $controllerName;
+        $controllerName = "App\Controllers\\" . $controllerName;
+
         if (class_exists($controllerName)) {
-            $controller = new $controllerName;
-            if (method_exists($controller, $action)) {
-                if (is_null($param)) {
-                    $controller->$action();
-                } else {
-                    $controller->$action($param);
-                }
+
+            $controller = new $controllerName();
+
+            if (method_exists($controller, $action) && $param === null) {
+                $controller->$action();
+            } elseif (method_exists($controller, $action) && $param !== null) {
+                $controller->$action($param);
             }
         } else {
-            $this->NotFound();
+            $this->create404();
         }
     }
 
-    public function NotFound()
+    /**
+     * RouteComponent 404 page
+     */
+    public function create404()
     {
-        header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found", true, 404);
+        header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found', true, 404);
         include('resources/views/404.php');
     }
 

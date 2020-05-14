@@ -11,7 +11,7 @@ class Controller
 
     public function __construct()
     {
-        $template = ['resource/views', 'resource/views/templates'];
+        $template = ['resources/views', 'resources/views/templates'];
 
         $params = [
             'cache'       => 'tmp/cache',
@@ -20,10 +20,5 @@ class Controller
         ];
 
         $this->view = new TwigComponent($template, $params);
-    }
-
-    public static function view($viewName)
-    {
-        require_once("resources/views/$viewName.php");
     }
 }

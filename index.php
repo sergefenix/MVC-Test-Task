@@ -5,4 +5,4 @@ error_reporting(E_ALL);
 define('ROOT', __FILE__);
 session_start();
 
-require_once ('vendor/autoload.php');
+require_once('vendor/autoload.php');
