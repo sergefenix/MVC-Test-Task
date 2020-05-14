@@ -1,0 +1,15 @@
+{
+  "require": {
+    "components/jquery": "2.*",
+    "altorouter/altorouter": "1.*",
+    "twig/twig": "^1.24",
+    "twbs/bootstrap": "^3.3",
+    "bower-asset/bootstrapvalidator": "^0.5.3",
+    "bower-asset/components-font-awesome": "^4.6"
+  },
+  "autoload": {
+    "files": [
+      "src/app/bootstrap.php"
+    ]
+  }
+}

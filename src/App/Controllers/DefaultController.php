@@ -16,4 +16,9 @@ class DefaultController extends Controller
     {
         self::view($viewName);
     }
+
+    public static function error($viewName)
+    {
+        self::view($viewName);
+    }
 }

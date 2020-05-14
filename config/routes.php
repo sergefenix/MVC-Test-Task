@@ -11,3 +11,7 @@ RouteComponent::set('create', function () {
 RouteComponent::set('edit', function () {
     DefaultController::edit('edit');
 });
+
+RouteComponent::set('404', function () {
+    DefaultController::error('404');
+});

@@ -1,4 +1,6 @@
 RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
+
+ErrorDocument 404 http://www.site.ru/404.php
 RewriteRule ^([^/]+)/? index.php?path=$1 [L,QSA]
