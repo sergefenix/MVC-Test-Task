@@ -6,14 +6,14 @@ class RouteComponent
 {
 
     protected $params = [];
-    private $routes;
+    private $router;
 
     /**
      * RouteComponent constructor.
      */
     public function __construct($router)
     {
-        $this->routes = $router;
+        $this->router = $router;
     }
 
 
