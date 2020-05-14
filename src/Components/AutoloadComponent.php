@@ -1,6 +1,6 @@
 <?php
 
-namespace Components;
+//namespace Components;
 
 class AutoloadComponent
 {

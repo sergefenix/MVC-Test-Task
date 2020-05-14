@@ -2,25 +2,28 @@
 
 namespace App\Controllers;
 
+use Components\TwigComponent;
+
 class Controller
 {
     public $model;
     public $view;
 
-    function __construct()
+    public function __construct()
     {
-        $template = array('src/app/views','src/app/views/templates');
+        $template = ['resource/views', 'resource/views/templates'];
 
-        $params = array(
-            'cache' => "tmp/cache",
+        $params = [
+            'cache'       => 'tmp/cache',
             'auto_reload' => true,
-            'autoescape' => true
-        );
+            'autoescape'  => true
+        ];
 
-        $this->view = new TwigView($template, $params);
+        $this->view = new TwigComponent($template, $params);
     }
 
-    public static function view($viewName) {
-        require_once("./Views/$viewName.php");
+    public static function view($viewName)
+    {
+        require_once("resources/views/$viewName.php");
     }
 }
