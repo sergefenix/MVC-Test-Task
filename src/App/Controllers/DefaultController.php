@@ -6,6 +6,7 @@ use App\Models\Task;
 
 class DefaultController extends Controller
 {
+
     public function home()
     {
         $tasks = new Task();

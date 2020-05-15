@@ -8,9 +8,12 @@ use Components\DBComponent;
 class Model
 {
     public $id;
-    protected $table;
+
     private $query;
+
     private $connect;
+
+    protected $table;
 
     /**
      * Model constructor.
@@ -115,6 +118,9 @@ class Model
         return false;
     }
 
+    /**
+     * @param array $properties
+     */
     public function update(array $properties)
     {
 
