@@ -2,7 +2,7 @@
 
 return array(
     'host'     => 'localhost',
-    'dbname'   => 'tasks',
+    'dbname'   => 'task_manager',
     'user'     => 'root',
-    'password' => 'localhost',
+    'password' => 'root',
 );

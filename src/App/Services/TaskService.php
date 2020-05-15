@@ -7,6 +7,7 @@ use Components\DBComponent;
 class TaskService
 {
     protected $connect;
+    protected $table;
 
     function __construct()
     {
