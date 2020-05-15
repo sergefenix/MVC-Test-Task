@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\Task;
+use App\Models\User;
+
 
 class DefaultController extends Controller
 {
@@ -40,16 +42,38 @@ class DefaultController extends Controller
         $this->view->render('create_task.html.twig');
     }
 
+
     public function register()
     {
-    }
+        $_POST['password'] = md5($_POST['password']);
+        $user = new User($_POST);
+        $result = $user->save();
 
-    public function form_registration()
-    {
+        if ($result) {
+            header('Location: ' . '/TaskManager/');
+        } else {
+            return false;
+        }
     }
 
     public function login()
     {
         $this->view->render('login.html.twig');
+    }
+
+    public function login_user()
+    {
+
+        $password = md5($_POST['password']);
+        $username = $_POST['username'];
+        $user = new User();
+
+        if ($user->login($username, $password)) {
+            header('Location: ' . '/TaskManager/');
+        } else {
+            echo 'Ошибка';
+            die();
+        }
+
     }
 }

@@ -23,12 +23,16 @@ class RouteComponent
             $this->createRoute('DefaultController', 'form_registration');
         });
 
-        $this->router->map('get', '/TaskManager/register', function () {
+        $this->router->map('post', '/TaskManager/register', function () {
             $this->createRoute('DefaultController', 'register');
         });
 
         $this->router->map('get', '/TaskManager/login', function () {
             $this->createRoute('DefaultController', 'login');
+        });
+
+        $this->router->map('post', '/TaskManager/login_user', function () {
+            $this->createRoute('DefaultController', 'login_user');
         });
 
         $this->router->map('post', '/TaskManager/create', function () {

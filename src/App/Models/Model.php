@@ -61,11 +61,26 @@ class Model
         return $this;
     }
 
+    /**
+     * @param $prop
+     * @param $val
+     * @return $this
+     */
+    public function where($prop, $val)
+    {
+        $this->query .= "WHERE `$prop` = '$val'";
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getCount()
     {
         $sql = "SELECT count(*) as total from $this->table";
 
-        return $this->connect->query($sql)->fetch()['total'];
+        return $this->connect->query($sql)->fetchColumn();
     }
 
     /**
@@ -86,7 +101,7 @@ class Model
      */
     public function get($fetch = 'fetchAll')
     {
-        $result = $this->connect->query($this->query)->$fetch(PDO::FETCH_CLASS, static::class);
+        $result = $this->connect->query($this->query)->$fetch();
         $this->query = '';
         return $result;
     }
@@ -97,7 +112,6 @@ class Model
     public function save()
     {
         $good = [];
-        $value = '';
         $block = ['connect', 'query', 'table'];
         $properties = get_object_vars($this);
 
@@ -109,6 +123,7 @@ class Model
                 $sql .= " $key,";
             }
         }
+
         $sql = substr_replace($sql, ') VALUES (', -1);
 
         foreach ($good as $value) {
