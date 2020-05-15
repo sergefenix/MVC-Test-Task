@@ -2,21 +2,24 @@
 
 namespace Components;
 
+use PDO;
+use PDOException;
+
 class DBComponent
 {
     public static function Connection()
     {
-        $paramsPath = 'Config/db_params.php';
+        $paramsPath = 'config/db_params.php';
         $params = include($paramsPath);
 
         try {
             $dsn = "mysql:host={$params['host']};dbname={$params['dbname']}";
             $db = new PDO($dsn, $params['user'], $params['password']);
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $db->exec("set names utf8");
+            $db->exec('set names utf8');
         } catch (PDOException $e) {
             error_log($e->getMessage());
-            die("A database error was encountered");
+            die('A database error was encountered');
         }
 
         return $db;
@@ -26,9 +29,8 @@ class DBComponent
     {
         $statement = self::Connection()->prepare($query);
         $statement->execute($params);
-        if (explode(' ', $query)[0] === "SELECT") {
-            $data = $statement->fetchAll();
-            return $data;
+        if (explode(' ', $query)[0] === 'SELECT') {
+            return $statement->fetchAll();
         }
     }
 }

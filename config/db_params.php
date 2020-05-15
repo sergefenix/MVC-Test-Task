@@ -1,8 +1,8 @@
 <?php
 
 return array(
-    'host'     => 'localhost',
+    'host'     => '127.0.0.1',
     'dbname'   => 'task_manager',
-    'user'     => 'root',
-    'password' => 'root',
+    'user'     => 'sergefenix',
+    'password' => 'sergefenix',
 );
