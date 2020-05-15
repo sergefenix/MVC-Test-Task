@@ -61,6 +61,13 @@ class Model
         return $this;
     }
 
+    public function getCount()
+    {
+        $sql = "SELECT count(*) as total from $this->table";
+
+        return $this->connect->query($sql)->fetch()['total'];
+    }
+
     /**
      * @param string $order
      * @param string $sort
