@@ -18,6 +18,18 @@ class RouteComponent
         $this->router->map('get', '/TaskManager/', function () {
             $this->createRoute('DefaultController', 'home');
         });
+
+        $this->router->map('get', '/TaskManager/form_registration', function () {
+            $this->createRoute('DefaultController', 'form_registration');
+        });
+
+        $this->router->map('get', '/TaskManager/register', function () {
+            $this->createRoute('DefaultController', 'register');
+        });
+
+        $this->router->map('get', '/TaskManager/login', function () {
+            $this->createRoute('DefaultController', 'login');
+        });
     }
 
     /**

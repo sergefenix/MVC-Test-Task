@@ -11,6 +11,7 @@
         <link rel="stylesheet" type="text/css" href="vendor/twbs/bootstrap/dist/css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="vendor/twbs/bootstrap/dist/css/bootstrap-theme.css">
         <link href="public/css/heroic-features.css" rel="stylesheet">
+        <link href="public/css/style.css" rel="stylesheet">
         <script src="vendor/components/jquery/jquery.js"></script>
         <script src="vendor/twbs/bootstrap/dist/js/bootstrap.js"></script>
 
@@ -43,7 +44,21 @@
 </head>
 
 <body>
-
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Sergefenix</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="/TaskManager/">Home</a></li>
+            <li><a href="#">Link</a></li>
+            <li><a href="#">Link</a></li>
+        </ul>
+        <form action="/TaskManager/login">
+            <button class="btn btn-danger navbar-btn pull-right">Login</button>
+        </form>
+    </div>
+</nav>
 <div class="container">
 
     {% block content %}{% endblock %}

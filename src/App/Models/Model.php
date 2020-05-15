@@ -17,12 +17,10 @@ class Model
         $this->connect = new DBComponent();
         $this->connect = $this->connect->Connection();
 
-        //        if (is_null($this->table)) {
-        //            $table = explode('\\', get_class($this));
-        //            $this->table= end($table);
-        //        }
-
-        // var_dump($this->table, get_class($this));exit;
+        if (is_null($this->table)) {
+            $table = explode('\\', get_class($this));
+            $this->table = mb_strtolower(end($table)) . 's';
+        }
     }
 
     /**

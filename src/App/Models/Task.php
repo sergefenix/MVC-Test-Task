@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class TaskModel extends Model
+class Task extends Model
 {
     public $email;
     public $name;
