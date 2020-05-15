@@ -1,15 +1,14 @@
+CREATE TABLE `users` (
+`id` int(10) NOT NULL auto_increment,
+`email` varchar(32) collate utf8_unicode_ci NOT NULL default '',
+`full_name` varchar(32) collate utf8_unicode_ci NOT NULL default '',
+`username` varchar(20) collate utf8_unicode_ci NOT NULL default '',
+`password` varchar(32) collate utf8_unicode_ci NOT NULL default '',
+`is_admin`  int(1) not null default 0 ,
+`author_id`  int(10) not null default 0 ,
+PRIMARY KEY  (`id`),
+UNIQUE KEY `username` (`username`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-create table `users` (
-    `id` int(10) unsigned not null auto_increment,
-    `email` varchar(255) not null,
-    `name`  varchar(255) not null,
-    `password`  varchar(255) not null,
-    `is_admin`   varchar(255) not null,,
-    primary key (id)
-)
-
-auto_increment = 1
-character set utf8
-collate utf8_general_ci;
 
 

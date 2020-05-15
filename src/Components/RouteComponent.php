@@ -65,7 +65,7 @@ class RouteComponent
     public function create404()
     {
         header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found', true, 404);
-        include('resources/views/404.php');
+        include('resources/views/404.html.twig');
     }
 
 }

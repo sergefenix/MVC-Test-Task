@@ -5,6 +5,15 @@
 {% endblock %}
 {% block content %}
     <div>
+        <form class="form-inline" action="/login.php">
+            <label for="email2" class="mb-2 mr-sm-2">Email:</label>
+            <input type="text" class="form-control mb-2 mr-sm-2" id="email2" placeholder="Enter email" name="email">
+            <label for="pwd2" class="mb-2 mr-sm-2">Password:</label>
+            <input type="text" class="form-control mb-2 mr-sm-2" id="pwd2" placeholder="Enter password" name="pswd">
+            <button type="submit" class="btn btn-primary mb-2">Submit</button>
+        </form>
+
+
         <form id="feedback" enctype="multipart/form-data" action="add" method="post" role="form">
             <div class="form-group">
                 <label for="exampleInputEmail">Email</label>
@@ -26,8 +35,8 @@
     <div>
         <h4>Сортировка</h4>
         <p>Email:
-           <a href="/ascemail">по возрастанию</a>, <a href="/descemail">по убыванию</a>
-           Дате:
+            <a href="/ascemail">по возрастанию</a>, <a href="/descemail">по убыванию</a>
+            Дате:
             <a href="/ascdate">по возрастанию</a>, <a href="/descdate">по убыванию</a>
         </p>
     </div>
@@ -43,10 +52,10 @@
     {% endfor %}
 
     <script>
-        $(document).ready(function() {
-            $('.js-preview').click(function() {
+        $(document).ready(function () {
+            $('.js-preview').click(function () {
                 var now = new Date();
-                $('#preview .panel-heading').html(function() {
+                $('#preview .panel-heading').html(function () {
                     var email = $('[name=exampleInputEmail]').val();
                     var date = now.toString();
                     return email + ' ' + date;

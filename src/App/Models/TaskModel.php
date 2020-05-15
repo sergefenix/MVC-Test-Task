@@ -7,4 +7,5 @@ class TaskModel extends Model
     public $name;
     public $text;
     public $img;
+    public $author;
 }
