@@ -13,6 +13,23 @@ class DefaultController extends Controller
         $this->view->render('tasks.html.twig', $data);
     }
 
+    public function create()
+    {
+        $task = new Task($_POST);
+        $result = $task->save();
+
+        if ($result) {
+            $this->view->render('tasks.html.twig');
+        } else {
+            return false;
+        }
+    }
+
+    public function create_form()
+    {
+        $this->view->render('create_task.html.twig');
+    }
+
     public function register()
     {
     }

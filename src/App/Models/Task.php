@@ -4,10 +4,12 @@ namespace App\Models;
 
 class Task extends Model
 {
-    public $email;
+
+    protected $table = 'tasks';
+
     public $name;
+    public $email;
     public $text;
-    public $table = 'tasks';
     public $img;
     public $author;
 

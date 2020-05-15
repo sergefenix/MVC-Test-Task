@@ -1,0 +1,87 @@
+{% extends 'templates/default.html.twig' %}
+{% block title %}Задачи{% endblock %}
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+{% block content %}
+    <div>
+        <form id="feedback" enctype="multipart/form-data" action="/TaskManager/create" method="post" role="form">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" name="name" placeholder="Enter name">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" name="email" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+                <label for="text">Text task</label>
+                <textarea name="text" class="form-control" rows="3"></textarea>
+            </div>
+
+            <div class="form-group">
+                <input type="file" name="InputFile"/>
+            </div>
+            <a href="#" class="js-preview btn btn-default">Preview</a>
+            <button type="submit" class="btn btn-primary">Send</button>
+        </form>
+    </div>
+
+    <div id="preview" class="panel panel-default" style="display:none">
+        <div class="panel-heading"></div>
+        <div class="panel-body"></div>
+        <img src="" class="img-rounded" width=320 height=240>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('.js-preview').click(function () {
+                var now = new Date();
+                $('#preview .panel-heading').html(function () {
+                    var email = $('[name=email]').val();
+                    var date = now.toString();
+                    return email + ' ' + date;
+                });
+                $('#preview .panel-body').html($('[name=text]').val());
+                $('#preview').show();
+                return false;
+            });
+
+            $('#feedback').bootstrapValidator({
+                // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    InputEmail: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Емаил адрес требуется и не может быть пустым'
+                            },
+                            emailAddress: {
+                                message: 'Это некорректный емаил адрес'
+                            }
+                        }
+                    },
+                    text: {
+                        validators: {
+                            stringLength: {
+                                min: 10,
+                                max: 3000,
+                                message: 'Введите описание задачи от 10 до 3000 символов'
+                            },
+                            notEmpty: {
+                                message: 'Введите описание задачи'
+                            }
+                        }
+                    }
+
+                }
+            });
+
+        });
+    </script>
+
+{% endblock %}
