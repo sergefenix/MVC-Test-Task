@@ -23,7 +23,9 @@ class Model
 
         if (is_null($this->table)) {
             $table = explode('\\', get_class($this));
-            $this->table = mb_strtolower(end($table)) . 's';
+            $str = end($table);
+            preg_match_all('/[A-Z][^A-Z]*?/Us', $str, $match);
+            $this->table = mb_strtolower(implode('_', $match[0])) . 's';
         }
 
         if ($params) {
@@ -79,6 +81,9 @@ class Model
         return $result;
     }
 
+    /**
+     * @return bool
+     */
     public function save()
     {
         $good = [];
@@ -108,5 +113,10 @@ class Model
         }
 
         return false;
+    }
+
+    public function update(array $properties)
+    {
+
     }
 }

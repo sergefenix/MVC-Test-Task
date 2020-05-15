@@ -19,7 +19,7 @@ class DefaultController extends Controller
         $result = $task->save();
 
         if ($result) {
-            $this->view->render('tasks.html.twig');
+            header('Location: '.'/TaskManager/');
         } else {
             return false;
         }

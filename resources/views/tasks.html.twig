@@ -5,24 +5,57 @@
 {% endblock %}
 {% block content %}
 
+    <div class="container">
+        <div class="well well-sm">
+            <strong>Сортировка (email): </strong>
+            <div class="btn-group">
+                <a href="#" id="list" class="btn btn-default btn-sm">
+                    <span></span>Asc</a>
+                <a href="#" id="grid" class="btn btn-default btn-sm">
+                    <span></span>Desc</a>
+            </div>
+            <strong> Сортировка (name): </strong>
+            <div class="btn-group">
+                <a href="#" id="list" class="btn btn-default btn-sm">
+                    <span></span>Asc</a>
+                <a href="#" id="grid" class="btn btn-default btn-sm">
+                    <span></span>Desc</a>
+            </div>
+            <strong>Сортировка (status): </strong>
+            <div class="btn-group">
+                <a href="#" id="list" class="btn btn-default btn-sm">
+                    <span></span>Asc</a>
+                <a href="#" id="grid" class="btn btn-default btn-sm">
+                    <span></span>Desc</a>
+            </div>
+        </div>
 
-    {% for task in tasks %}
-        <li>{{ task.id }}</li>
-    {% else %}
-        no users
-    {% endfor %}
-
-    <div>
-        <br>
-        <h4>Сортировка</h4>
-        <p>
-            Email:
-            <a href="/ascemail">по возрастанию</a>, <a href="/descemail">по убыванию</a><br>
-            Дате:
-            <a href="/ascdate">по возрастанию</a>, <a href="/descdate">по убыванию</a><br>
-            Статусу
-            <a href="/ascdate">открыт</a>, <a href="/descdate">закрыт</a>
-        </p>
+        <div id="products" class="row list-group">
+            {% for task in tasks %}
+                <div class="item col-xs-4 col-lg-4">
+                    <div class="thumbnail">
+                        <img class="group list-group-image" src="https://bootstraptema.ru/images/type/400x250.png"
+                             alt="3"/>
+                        <div class="caption">
+                            <h4 class="group inner list-group-item-heading">{{ task.name }}</h4>
+                            <p class="group inner list-group-item-text">
+                                {{ task.text }}
+                            </p>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6">
+                                    <p class="lead">
+                                        {{ task.email }}</p>
+                                </div>
+                                <br><br>
+                                <div class="col-xs-12 col-md-6">
+                                    <a class="btn btn-success pull-right" href="#">Заказать</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 
 {% endblock %}
