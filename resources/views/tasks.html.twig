@@ -9,23 +9,23 @@
         <div class="well well-sm">
             <strong>Сортировка (email): </strong>
             <div class="btn-group">
-                <a href="#" id="list" class="btn btn-default btn-sm">
+                <a href="/TaskManager?val=email&order=asc" class="btn btn-default btn-sm">
                     <span></span>Asc</a>
-                <a href="#" id="grid" class="btn btn-default btn-sm">
+                <a href="/TaskManager?val=email&order=desc" class="btn btn-default btn-sm">
                     <span></span>Desc</a>
             </div>
             <strong> Сортировка (name): </strong>
             <div class="btn-group">
-                <a href="#" id="list" class="btn btn-default btn-sm">
+                <a href="/TaskManager?val=name&order=asc" class="btn btn-default btn-sm">
                     <span></span>Asc</a>
-                <a href="#" id="grid" class="btn btn-default btn-sm">
+                <a href="/TaskManager?val=name&order=desc" class="btn btn-default btn-sm">
                     <span></span>Desc</a>
             </div>
             <strong>Сортировка (status): </strong>
             <div class="btn-group">
-                <a href="#" id="list" class="btn btn-default btn-sm">
+                <a href="/TaskManager?val=status&order=asc" class="btn btn-default btn-sm">
                     <span></span>Asc</a>
-                <a href="#" id="grid" class="btn btn-default btn-sm">
+                <a href="/TaskManager?val=status&order=desc" class="btn btn-default btn-sm">
                     <span></span>Desc</a>
             </div>
         </div>
@@ -47,8 +47,13 @@
                                         {{ task.email }}</p>
                                 </div>
                                 <br><br>
+
                                 <div class="col-xs-12 col-md-6">
-                                    <a class="btn btn-success pull-right" href="#">Закрыть</a>
+                                    {% if task.status == 1 %}
+                                        <a class="btn btn-success pull-right" href="#">Закрыть</a>
+                                    {% else %}
+                                        <a class="btn btn-danger pull-right" href="#">Открыть</a>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>

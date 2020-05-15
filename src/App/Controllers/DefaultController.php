@@ -10,7 +10,16 @@ class DefaultController extends Controller
     public function home()
     {
         $tasks = new Task();
-        $data = ['tasks' => $tasks->getAll()];
+
+        if ($_GET) {
+            $val = $_GET['val'];
+            $order = $_GET['order'];
+            $tasks = $tasks->select()->orderBy($val, $order)->get();
+        } else {
+            $tasks = $tasks->getAll();
+        }
+
+        $data = ['tasks' => $tasks];
         $this->view->render('tasks.html.twig', $data);
     }
 
@@ -20,7 +29,7 @@ class DefaultController extends Controller
         $result = $task->save();
 
         if ($result) {
-            header('Location: '.'/TaskManager/');
+            header('Location: ' . '/TaskManager/');
         } else {
             return false;
         }
