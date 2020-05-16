@@ -16,19 +16,27 @@ class RouteComponent
         $this->router = new AltoRouter();
 
         $this->router->map('get', '/TaskManager/', function () {
-            $this->createRoute('DefaultController', 'home');
+            $this->createRoute('TaskController', 'home');
         });
 
         $this->router->map('get', '/TaskManager/form_registration', function () {
-            $this->createRoute('DefaultController', 'form_registration');
+            $this->createRoute('TaskController', 'form_registration');
         });
 
         $this->router->map('post', '/TaskManager/create', function () {
-            $this->createRoute('DefaultController', 'create');
+            $this->createRoute('TaskController', 'create');
         });
 
         $this->router->map('get', '/TaskManager/create_form', function () {
-            $this->createRoute('DefaultController', 'create_form');
+            $this->createRoute('TaskController', 'create_form');
+        });
+
+        $this->router->map('get', '/TaskManager/delete', function () {
+            $this->createRoute('TaskController', 'delete_tasks');
+        });
+
+        $this->router->map('get', '/TaskManager/update', function () {
+            $this->createRoute('TaskController', 'update_tasks');
         });
 
 

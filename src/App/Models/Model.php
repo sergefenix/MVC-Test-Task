@@ -11,7 +11,7 @@ class Model
 
     private $query;
 
-    private $connect;
+    protected $connect;
 
     protected $table;
 
@@ -146,5 +146,12 @@ class Model
     public function update(array $properties)
     {
 
+    }
+
+    public function delete($id)
+    {
+        $sql = "DELETE FROM $this->table WHERE id = $id";
+
+        return $this->connect->query($sql)->execute();
     }
 }

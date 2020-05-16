@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use App\Models\Task;
 
-class DefaultController extends Controller
+class TaskController extends Controller
 {
 
     public $cook;
@@ -52,6 +52,39 @@ class DefaultController extends Controller
         $data = ['cook' => $this->cook];
 
         $this->view->render('create_task.html.twig', $data);
+    }
+
+    public function delete_tasks()
+    {
+
+        if ($this->cook) {
+            $id = $_GET['id'];
+
+            $task = new Task();
+            $task->delete($id);
+
+            header('Location: ' . '/TaskManager/');
+        } else {
+            echo 'This user does not have the necessary privileges';
+            die();
+        }
+    }
+
+    public function update_tasks()
+    {
+        if ($this->cook) {
+            $id = $_GET['id'];
+            $status = $_GET['status'];
+
+            $task = new Task();
+            $task->update_status($id, $status);
+
+            header('Location: ' . '/TaskManager/');
+        } else {
+            echo 'This user does not have the necessary privileges';
+            die();
+        }
+
     }
 
 }
