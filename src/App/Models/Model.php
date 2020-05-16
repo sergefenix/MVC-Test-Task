@@ -15,6 +15,10 @@ class Model
 
     protected $table;
 
+    protected $per_page;
+
+    private $page;
+
     /**
      * Model constructor.
      * @param array $params
@@ -36,6 +40,12 @@ class Model
                 $this->$key = htmlspecialchars(trim($value));
             }
         }
+
+        if ($this->per_page === null) {
+            $this->per_page = 3;
+        }
+
+        $this->page = $_GET['page'] ?? 1;
     }
 
     /**
@@ -43,7 +53,7 @@ class Model
      */
     public function getAll()
     {
-        $sql = "SELECT * FROM $this->table ORDER by id desc";
+        $sql = "SELECT * FROM $this->table ORDER by id desc LIMIT 0, $this->per_page";
 
         return $this->connect->query($sql)->fetchAll(PDO::FETCH_CLASS, static::class);
     }
@@ -52,7 +62,7 @@ class Model
      * @param array $args
      * @return Model
      */
-    public function select(array $args = ['*'])
+    public function select(array $args = ['*']): self
     {
         $args = implode(', ', $args);
 
@@ -66,7 +76,7 @@ class Model
      * @param $val
      * @return $this
      */
-    public function where($prop, $val)
+    public function where($prop, $val): self
     {
         $this->query .= "WHERE `$prop` = '$val'";
 
@@ -88,7 +98,7 @@ class Model
      * @param string $sort
      * @return Model
      */
-    public function orderBy($order = 'id', $sort = 'desc')
+    public function orderBy($order = 'id', $sort = 'desc'): self
     {
         $this->query .= "ORDER BY $order $sort";
 
@@ -109,10 +119,10 @@ class Model
     /**
      * @return bool
      */
-    public function save()
+    public function save(): bool
     {
         $good = [];
-        $block = ['connect', 'query', 'table'];
+        $block = ['connect', 'query', 'table', 'per_page'];
         $properties = get_object_vars($this);
 
         $sql = "INSERT INTO $this->table (";
@@ -153,5 +163,32 @@ class Model
         $sql = "DELETE FROM $this->table WHERE id = $id";
 
         return $this->connect->query($sql)->execute();
+    }
+
+    /**
+     * @return Model
+     */
+    public function paginate(): Model
+    {
+        $offset = (($this->page - 1) * $this->per_page);
+        $this->query .= " LIMIT $offset, $this->per_page";
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function page_paginator(): array
+    {
+        $count = $this->getCount();
+        $total_pages = ceil($count / $this->per_page);
+
+        return
+            [
+                'page'       => $this->page,
+                'total_page' => $total_pages
+
+            ];
     }
 }

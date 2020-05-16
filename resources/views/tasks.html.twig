@@ -50,10 +50,12 @@
 
                                 <div class="col-xs-12 col-md-4">
                                     {% if task.status == 1 %}
-                                        <a class="btn btn-success pull-right" href="/TaskManager/update?id={{ task.id }}&status=0">Закрыть</a>
+                                        <a class="btn btn-success pull-right"
+                                           href="/TaskManager/update?id={{ task.id }}&status=0">Закрыть</a>
 
                                     {% else %}
-                                        <a class="btn btn-danger pull-right" href="/TaskManager/update?id={{ task.id }}&status=1">Открыть</a>
+                                        <a class="btn btn-danger pull-right"
+                                           href="/TaskManager/update?id={{ task.id }}&status=1">Открыть</a>
                                     {% endif %}
                                 </div>
                                 <div class="col-xs-12 col-md-4">
@@ -64,6 +66,20 @@
                     </div>
                 </div>
             {% endfor %}
+        </div>
+        <div>
+            <ul class="pagination">
+                <li><a href="?page=1">First</a></li>
+
+                <li class="{% if  paginator['page'] <= 1 %} disabled {% endif %}">
+                    <a href="{% if  paginator['page'] <= 1 %} # {% else %} ?page={{ paginator['page'] - 1 }} {% endif %}">Prev</a>
+                </li>
+                <li class="{% if  paginator['page'] >= paginator['total_page'] %} disabled {% endif %}">
+                    <a href="{% if  paginator['page'] >= paginator['total_page'] %} # {% else %}
+                       ?page={{ paginator['page'] + 1 }}{% endif %}">Next</a>
+                </li>
+                <li><a href="?page={{ paginator['total_page'] }}">Last</a></li>
+            </ul>
         </div>
     </div>
 

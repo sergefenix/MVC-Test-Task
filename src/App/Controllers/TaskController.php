@@ -16,16 +16,20 @@ class TaskController extends Controller
     {
         $tasks = new Task();
 
-        if ($_GET) {
+        if (isset($_GET['val'], $_GET['order'])) {
             $val = $_GET['val'];
             $order = $_GET['order'];
-            $tasks = $tasks->select()->orderBy($val, $order)->get();
+            $tasks = $tasks->select()->orderBy($val, $order)->paginate()->get();
         } else {
-            $tasks = $tasks->getAll();
+            $tasks = $tasks->select()->paginate()->get();
         }
 
-        $data = ['tasks' => $tasks, 'cook' => $this->cook];
+        $paginator = new Task();
+        $paginator = $paginator->page_paginator();
+
+        $data = ['tasks' => $tasks, 'cook' => $this->cook, 'paginator' => $paginator];
         $this->view->render('tasks.html.twig', $data);
+
     }
 
     /**
@@ -54,9 +58,11 @@ class TaskController extends Controller
         $this->view->render('create_task.html.twig', $data);
     }
 
+    /**
+     *  Method for delete task
+     */
     public function delete_tasks()
     {
-
         if ($this->cook) {
             $id = $_GET['id'];
 
@@ -70,6 +76,9 @@ class TaskController extends Controller
         }
     }
 
+    /**
+     *  Method for update task status
+     */
     public function update_tasks()
     {
         if ($this->cook) {
