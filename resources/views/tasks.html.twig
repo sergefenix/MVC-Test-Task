@@ -9,23 +9,29 @@
         <div class="well well-sm">
             <strong>Сортировка (email): </strong>
             <div class="btn-group">
-                <a href="/TaskManager?val=email&order=asc" class="btn btn-default btn-sm">
+                <a href="?val=email&order=asc{% if  paginator['page'] %}&page={{ paginator['page'] }}{% endif %}"
+                   class="btn btn-default btn-sm">
                     <span></span>Asc</a>
-                <a href="/TaskManager?val=email&order=desc" class="btn btn-default btn-sm">
+                <a href="?val=email&order=desc{% if  paginator['page'] %}&page={{ paginator['page'] }}{% endif %}"
+                   class="btn btn-default btn-sm">
                     <span></span>Desc</a>
             </div>
             <strong> Сортировка (name): </strong>
             <div class="btn-group">
-                <a href="/TaskManager?val=name&order=asc" class="btn btn-default btn-sm">
+                <a href="?val=name&order=asc{% if  paginator['page'] %}&page={{ paginator['page'] }}{% endif %}"
+                   class="btn btn-default btn-sm">
                     <span></span>Asc</a>
-                <a href="/TaskManager?val=name&order=desc" class="btn btn-default btn-sm">
+                <a href="?val=name&order=desc{% if  paginator['page'] %}&page={{ paginator['page'] }}{% endif %}"
+                   class="btn btn-default btn-sm">
                     <span></span>Desc</a>
             </div>
             <strong>Сортировка (status): </strong>
             <div class="btn-group">
-                <a href="/TaskManager?val=status&order=asc" class="btn btn-default btn-sm">
+                <a href="?val=status&order=asc{% if  paginator['page'] %}&page={{ paginator['page'] }}{% endif %}"
+                   class="btn btn-default btn-sm">
                     <span></span>Asc</a>
-                <a href="/TaskManager?val=status&order=desc" class="btn btn-default btn-sm">
+                <a href="?val=status&order=desc{% if  paginator['page'] %}&page={{ paginator['page'] }}{% endif %}"
+                   class="btn btn-default btn-sm">
                     <span></span>Desc</a>
             </div>
         </div>
@@ -69,16 +75,22 @@
         </div>
         <div>
             <ul class="pagination">
-                <li><a href="?page=1">First</a></li>
+                <li><a href="?page=1{% if paginator['val'] %}&val={{ paginator['val'] }}&order={{ paginator['order'] }}
+                      {% endif %}">First</a></li>
 
                 <li class="{% if  paginator['page'] <= 1 %} disabled {% endif %}">
-                    <a href="{% if  paginator['page'] <= 1 %} # {% else %} ?page={{ paginator['page'] - 1 }} {% endif %}">Prev</a>
+                    <a href="{% if  paginator['page'] <= 1 %}#
+                  {% else %}?page={{ paginator['page'] - 1 }}{% if paginator['val'] %}&val={{ paginator['val'] }}&order={{ paginator['order'] }}
+                      {% endif %}{% endif %}">Prev</a>
                 </li>
                 <li class="{% if  paginator['page'] >= paginator['total_page'] %} disabled {% endif %}">
                     <a href="{% if  paginator['page'] >= paginator['total_page'] %} # {% else %}
-                       ?page={{ paginator['page'] + 1 }}{% endif %}">Next</a>
+                       ?page={{ paginator['page'] + 1 }}{% if paginator['val'] %}&val={{ paginator['val'] }}&order={{ paginator['order'] }}
+                      {% endif %}{% endif %}">Next</a>
                 </li>
-                <li><a href="?page={{ paginator['total_page'] }}">Last</a></li>
+                <li>
+                    <a href="?page={{ paginator['total_page'] }}{% if paginator['val'] %}&val={{ paginator['val'] }}&order={{ paginator['order'] }}
+                      {% endif %}">Last</a></li>
             </ul>
         </div>
     </div>

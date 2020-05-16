@@ -45,7 +45,7 @@ class Model
             $this->per_page = 3;
         }
 
-        $this->page = $_GET['page'] ?? 1;
+        $this->page = (int) ($_GET['page'] ?? 1);
     }
 
     /**

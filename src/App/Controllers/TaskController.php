@@ -16,16 +16,18 @@ class TaskController extends Controller
     {
         $tasks = new Task();
 
+        $paginator = new Task();
+        $paginator = $paginator->page_paginator();
+
         if (isset($_GET['val'], $_GET['order'])) {
             $val = $_GET['val'];
             $order = $_GET['order'];
+            $paginator['val'] = $val;
+            $paginator['order'] = $order;
             $tasks = $tasks->select()->orderBy($val, $order)->paginate()->get();
         } else {
             $tasks = $tasks->select()->paginate()->get();
         }
-
-        $paginator = new Task();
-        $paginator = $paginator->page_paginator();
 
         $data = ['tasks' => $tasks, 'cook' => $this->cook, 'paginator' => $paginator];
         $this->view->render('tasks.html.twig', $data);
