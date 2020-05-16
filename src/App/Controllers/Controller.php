@@ -7,6 +7,7 @@ use Components\TwigComponent;
 class Controller
 {
     public $view;
+    protected $cook;
 
     public function __construct()
     {
@@ -19,5 +20,6 @@ class Controller
         ];
 
         $this->view = new TwigComponent($template, $params);
+        $this->cook = $_COOKIE['user'] ?? false;
     }
 }

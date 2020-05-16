@@ -23,24 +23,29 @@ class RouteComponent
             $this->createRoute('DefaultController', 'form_registration');
         });
 
-        $this->router->map('post', '/TaskManager/register', function () {
-            $this->createRoute('DefaultController', 'register');
-        });
-
-        $this->router->map('get', '/TaskManager/login', function () {
-            $this->createRoute('DefaultController', 'login');
-        });
-
-        $this->router->map('post', '/TaskManager/login_user', function () {
-            $this->createRoute('DefaultController', 'login_user');
-        });
-
         $this->router->map('post', '/TaskManager/create', function () {
             $this->createRoute('DefaultController', 'create');
         });
 
         $this->router->map('get', '/TaskManager/create_form', function () {
             $this->createRoute('DefaultController', 'create_form');
+        });
+
+
+        $this->router->map('post', '/TaskManager/register', function () {
+            $this->createRoute('UserController', 'register');
+        });
+
+        $this->router->map('get', '/TaskManager/login', function () {
+            $this->createRoute('UserController', 'login');
+        });
+
+        $this->router->map('post', '/TaskManager/login_user', function () {
+            $this->createRoute('UserController', 'login_user');
+        });
+
+        $this->router->map('get', '/TaskManager/logout', function () {
+            $this->createRoute('UserController', 'logout');
         });
     }
 

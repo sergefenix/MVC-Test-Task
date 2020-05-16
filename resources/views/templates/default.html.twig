@@ -51,9 +51,16 @@
             <li><a href="/TaskManager/create_form">Create</a></li>
             <li><a href="#">Link</a></li>
         </ul>
-        <form action="/TaskManager/login">
-            <button class="btn btn-danger navbar-btn pull-right">Login</button>
-        </form>
+
+        {% if cook != false %}
+            <form action="/TaskManager/logout">
+                <button class="btn btn-danger navbar-btn pull-right">Logout</button>
+            </form>
+        {% else %}
+            <form action="/TaskManager/login">
+                <button class="btn btn-success navbar-btn pull-right">Login</button>
+            </form>
+        {% endif %}
     </div>
 </nav>
 
