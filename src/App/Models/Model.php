@@ -58,6 +58,13 @@ class Model
         return $this->connect->query($sql)->fetchAll(PDO::FETCH_CLASS, static::class);
     }
 
+    public function getOne($id)
+    {
+        $sql = "SELECT * FROM $this->table WHERE `id` = $id";
+
+        return $this->connect->query($sql)->fetchAll();
+    }
+
     /**
      * @param array $args
      * @return Model
@@ -122,7 +129,7 @@ class Model
     public function save(): bool
     {
         $good = [];
-        $block = ['connect', 'query', 'table', 'per_page'];
+        $block = ['connect', 'query', 'table', 'per_page', 'page'];
         $properties = get_object_vars($this);
 
         $sql = "INSERT INTO $this->table (";

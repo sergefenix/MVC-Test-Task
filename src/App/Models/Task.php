@@ -15,4 +15,9 @@ class Task extends Model
         $sql = "UPDATE $this->table SET `status` = $status WHERE `id` = $id";
         return $this->connect->query($sql)->execute();
     }
+
+    public function delete_img($id)
+    {
+        unlink("public/downloads/" . $id);
+    }
 }

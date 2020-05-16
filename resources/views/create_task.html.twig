@@ -6,14 +6,17 @@
 {% block content %}
     <div>
         <form id="feedback" enctype="multipart/form-data" action="/TaskManager/create" method="post" role="form">
+
             <div class="form-group">
                 <label for="name">Name</label>
                 <input required type="text" class="form-control" name="name" placeholder="Enter username">
             </div>
+
             <div class="form-group">
                 <label for="email">Email</label>
                 <input required type="email" class="form-control" name="email" placeholder="Enter email">
             </div>
+
             <div class="form-group">
                 <label for="text">Text task</label>
                 <textarea required name="text" class="form-control" rows="3"></textarea>
@@ -22,6 +25,7 @@
             <div class="form-group">
                 <input type="file" name="InputFile"/>
             </div>
+
             <a href="#" class="js-preview btn btn-default">Preview</a>
             <button type="submit" class="btn btn-primary">Send</button>
         </form>
@@ -64,20 +68,7 @@
                                 message: 'Это некорректный емаил адрес'
                             }
                         }
-                    },
-                    text: {
-                        validators: {
-                            stringLength: {
-                                min: 10,
-                                max: 3000,
-                                message: 'Введите описание задачи от 10 до 3000 символов'
-                            },
-                            notEmpty: {
-                                message: 'Введите описание задачи'
-                            }
-                        }
                     }
-
                 }
             });
 
