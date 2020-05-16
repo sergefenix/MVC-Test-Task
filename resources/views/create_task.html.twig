@@ -1,5 +1,5 @@
 {% extends 'templates/default.html.twig' %}
-{% block title %}Задачи{% endblock %}
+{% block title %}Создание задачи{% endblock %}
 {% block head %}
     {{ parent() }}
 {% endblock %}
@@ -33,7 +33,7 @@
 
     <div id="preview" class="panel panel-default" style="display:none">
         <div class="panel-heading"></div>
-        <div class="panel-body"></div>
+        <div class="panel-body" style="overflow-x:hidden"></div>
         <img src="" id="blah" class="img-rounded" width=320 height=240>
     </div>
 
@@ -62,8 +62,8 @@
                 var now = new Date();
                 $('#preview .panel-heading').html(function () {
                     var email = $('[name=email]').val();
-                    var date = now.toString();
-                    return email + ' ' + date;
+                    var name =  $('[name=name]').val();
+                    return email + ' ' + name;
                 });
                 $('#preview .panel-body').html($('[name=text]').val());
                 $('#preview').show();

@@ -78,7 +78,6 @@ class TaskController extends Controller
             $id = $_GET['id'];
 
             $task = new Task();
-
             $val = $task->getOne($id);
 
             $task->delete_img($val[0]['img']);
@@ -97,11 +96,9 @@ class TaskController extends Controller
     public function update_tasks()
     {
         if ($this->cook) {
-            $id = $_GET['id'];
-            $status = $_GET['status'];
 
             $task = new Task();
-            $task->update_status($id, $status);
+            $task->update_status($_POST);
 
             header('Location: ' . '/TaskManager/');
         } else {
@@ -109,6 +106,17 @@ class TaskController extends Controller
             die();
         }
 
+    }
+
+    public function update_task_form()
+    {
+        $id = $_GET['id'];
+        $task = new Task();
+        $task = $task->getOne($id);
+
+        $data = ['cook' => $this->cook, 'task' => $task[0]];
+
+        $this->view->render('update_task.html.twig', $data);
     }
 
     /**

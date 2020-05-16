@@ -35,9 +35,14 @@ class RouteComponent
             $this->createRoute('TaskController', 'delete_tasks');
         });
 
-        $this->router->map('get', '/TaskManager/update', function () {
+        $this->router->map('post', '/TaskManager/update', function () {
             $this->createRoute('TaskController', 'update_tasks');
         });
+
+        $this->router->map('get', '/TaskManager/update_form', function () {
+            $this->createRoute('TaskController', 'update_task_form');
+        });
+
 
 
         $this->router->map('post', '/TaskManager/register', function () {
