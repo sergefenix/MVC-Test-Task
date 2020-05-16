@@ -7,7 +7,6 @@ use Exception;
 
 class TaskController extends Controller
 {
-
     public $cook;
 
     /**

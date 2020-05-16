@@ -18,6 +18,6 @@ class Task extends Model
 
     public function delete_img($id)
     {
-        unlink("public/downloads/" . $id);
+        unlink('public/downloads/' . $id);
     }
 }
