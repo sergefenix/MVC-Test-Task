@@ -7,7 +7,6 @@ use Exception;
 
 class TaskController extends Controller
 {
-    public $cook;
 
     /**
      * Redirect on home page
@@ -29,7 +28,7 @@ class TaskController extends Controller
             $tasks = $tasks->select()->paginate()->get();
         }
 
-        $data = ['tasks' => $tasks, 'cook' => $this->cook, 'paginator' => $paginator];
+        $data = ['tasks' => $tasks, 'cook' => ['user' => $this->cook, 'admin' => $this->is_admin], 'paginator' => $paginator];
         $this->view->render('tasks.html.twig', $data);
 
     }

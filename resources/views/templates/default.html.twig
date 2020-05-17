@@ -43,7 +43,11 @@
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">TaskManager</a>
+            {% if cook['user'] != false %}
+            <a class="navbar-brand" href="#">Hello {{ cook['user'] }}</a>
+            {% else %}
+                <a class="navbar-brand" href="#">TaskManager</a>
+            {% endif %}
         </div>
         <ul class="nav navbar-nav">
             <li><a href="/TaskManager/">Home</a></li>
@@ -51,7 +55,7 @@
             <li><a href="/TaskManager/dayside/index.php">Dayside</a></li>
         </ul>
 
-        {% if cook != false %}
+        {% if cook['user'] != false %}
             <form action="/TaskManager/logout">
                 <button class="btn btn-danger navbar-btn pull-right">Logout</button>
             </form>

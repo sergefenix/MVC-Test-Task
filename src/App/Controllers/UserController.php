@@ -21,7 +21,8 @@ class UserController extends Controller
         if (!$response) {
             $result = $user->save();
         } else {
-            echo 'This user already exist '; die();
+            echo 'This user already exist ';
+            die();
         }
 
         if ($result) {
@@ -53,6 +54,10 @@ class UserController extends Controller
 
             setcookie('user', $username, time() + 3600, '/');
 
+            if ($user->is_admin($username)) {
+                setcookie('admin', $username, time() + 3600, '/');
+            }
+
             header('Location: ' . '/TaskManager/');
         } else {
             echo 'This user not found !';
@@ -67,6 +72,7 @@ class UserController extends Controller
     public function logout()
     {
         setcookie('user', '', time() - 3600, '/');
+        setcookie('admin', '', time() - 3600, '/');
         header('Location: ' . '/TaskManager/');
     }
 

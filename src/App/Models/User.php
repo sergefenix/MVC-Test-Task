@@ -15,4 +15,9 @@ class User extends Model
 
         return $password === $v;
     }
+
+    public function is_admin($login)
+    {
+        return $this->select(['is_admin'])->where('username', $login)->get('fetchColumn');
+    }
 }

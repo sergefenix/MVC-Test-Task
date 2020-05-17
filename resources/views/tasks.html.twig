@@ -66,15 +66,15 @@
                                            {% if task.status == 1 %}checked{% endif %}>
                                     <label class="form-check-label" for="exampleCheck1">Status</label>
                                 </div>
-                                {% if cook != false %}
+                                {% if cook['admin'] != false %}
                                     <div class="col-xs-12 col-md-4">
                                         <a class="btn btn-info pull-right"
                                            href="/TaskManager/update_form?id={{ task.id }}">Редактировать</a>
                                     </div>
-                                {% endif %}
-                                <div class="col-xs-12 col-md-{% if cook != false %}4{% else %}8{% endif %}">
+                                <div class="col-xs-12 col-md-4">
                                     <a class="btn btn-danger pull-right" href="/TaskManager/delete?id={{ task.id }}">Удалить</a>
                                 </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>

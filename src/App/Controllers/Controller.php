@@ -8,6 +8,7 @@ class Controller
 {
     public $view;
     protected $cook;
+    protected $is_admin;
 
     public function __construct()
     {
@@ -21,5 +22,6 @@ class Controller
 
         $this->view = new TwigComponent($template, $params);
         $this->cook = $_COOKIE['user'] ?? false;
+        $this->is_admin = $_COOKIE['admin'] ?? false;
     }
 }
