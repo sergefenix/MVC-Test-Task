@@ -15,7 +15,14 @@ class UserController extends Controller
     {
         $_POST['password'] = md5($_POST['password']);
         $user = new User($_POST);
-        $result = $user->save();
+
+        $response = $user->select(['id'])->where('username', $_POST['username'])->get();
+
+        if (!$response) {
+            $result = $user->save();
+        } else {
+            echo 'This user already exist '; die();
+        }
 
         if ($result) {
             header('Location: ' . '/TaskManager/');

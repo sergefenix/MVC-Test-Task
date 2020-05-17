@@ -45,7 +45,7 @@ class Model
             $this->per_page = 3;
         }
 
-        $this->page = (int) ($_GET['page'] ?? 1);
+        $this->page = (int)($_GET['page'] ?? 1);
     }
 
     /**
@@ -149,6 +149,7 @@ class Model
 
         $sql = substr_replace($sql, ')', -2);
         $result = $this->connect->query($sql);
+
 
         if ($result) {
             return true;
