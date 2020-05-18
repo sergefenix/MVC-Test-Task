@@ -31,6 +31,14 @@ class RouteComponent
             $this->createRoute('TaskController', 'create_form');
         });
 
+        $this->router->map('get', '/TaskManager/Metagram', function () {
+            $this->createRoute('FindWayForWord', 'index');
+        });
+
+        $this->router->map('post', '/TaskManager/Metagram/create', function () {
+            $this->createRoute('FindWayForWord', 'create');
+        });
+
         $this->router->map('get', '/TaskManager/delete', function () {
             $this->createRoute('TaskController', 'delete_tasks');
         });

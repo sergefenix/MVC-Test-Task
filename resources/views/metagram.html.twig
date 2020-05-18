@@ -1,0 +1,28 @@
+{% extends 'default.html.twig' %}
+{% block title %}Авторизация{% endblock %}
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+{% block content %}
+    <div class="form-wrap">
+        <h1>Метаграмма</h1>
+
+            <div class="well well-sm">
+                <strong>{% if result %}{{ result }}{% endif %}</strong>
+            </div>
+
+    </div>
+    <form method="post" action="/TaskManager/Metagram/create">
+        <div class="form-group">
+            <label for="first_word">Первое слово</label>
+            <input type="text" name="first_word" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="second_word">Второе слово</label>
+            <input type="text" name="second_word" class="form-control" required>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Старт</button>
+    </form>
+    </div>
+{% endblock %}
