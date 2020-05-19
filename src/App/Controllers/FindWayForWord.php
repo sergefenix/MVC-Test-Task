@@ -82,6 +82,7 @@ class FindWayForWord extends Controller
         if ($array_of_children) {
             return $array_of_children;
         }
+        return [];
     }
 
     /**
@@ -90,6 +91,7 @@ class FindWayForWord extends Controller
      */
     public function FindNewChildren($array_of_childrens)
     {
+        $array_of_childrens = $array_of_childrens ?? [];
         $this->words_passed = array_unique(array_merge($this->words_passed, $array_of_childrens));
         $good_children = [];
         $new_children = [];

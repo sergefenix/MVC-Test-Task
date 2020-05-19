@@ -43,7 +43,7 @@ class TaskController extends Controller
 
         $input_file = $_FILES['InputFile'];
         $rand = random_int(1000, 10000);
-        $input_file['name'] = "$rand" . $input_file['name'];
+        $input_file['name'] = "{$rand}{$input_file['name']}";
 
         $name_file = $this->resize($input_file);
         $_POST['img'] = $name_file;
@@ -94,6 +94,7 @@ class TaskController extends Controller
      */
     public function update_tasks()
     {
+
         if ($this->cook) {
 
             $task = new Task();
