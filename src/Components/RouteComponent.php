@@ -3,10 +3,17 @@
 namespace Components;
 
 use AltoRouter;
+use Components\Request;
 
 class RouteComponent
 {
     private $router;
+    private $request;
+    private $supportedHttpMethods =
+        [
+            'GET',
+            'POST'
+        ];
 
     /**
      * RouteComponent constructor.
@@ -14,6 +21,7 @@ class RouteComponent
     public function __construct()
     {
         $this->router = new AltoRouter();
+        $this->request = new Request();
 
         $this->router->map('get', '/TaskManager/', function () {
             $this->createRoute('TaskController', 'home');
@@ -50,7 +58,6 @@ class RouteComponent
         $this->router->map('get', '/TaskManager/update_form', function () {
             $this->createRoute('TaskController', 'update_task_form');
         });
-
 
 
         $this->router->map('post', '/TaskManager/register', function () {
@@ -116,6 +123,76 @@ class RouteComponent
     {
         header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found', true, 404);
         include('resources/views/404.html.twig');
+    }
+
+    /**
+     * @param $name
+     * @param $args
+     */
+    public function __call($name, $args)
+    {
+        list($route, $method) = $args;
+
+        if (!in_array(strtoupper($name), $this->supportedHttpMethods, true)) {
+            $this->invalidMethodHandler();
+        }
+
+        $this->{strtolower($name)}[$this->formatRoute($route)] = $method;
+    }
+
+    /**
+     * Removes trailing forward slashes from the right of the route.
+     * @param $route
+     * @return string
+     */
+    private function formatRoute($route): string
+    {
+        $result = rtrim($route, '/');
+        if ($result === '') {
+            return '/';
+        }
+        return $result;
+    }
+
+    /**
+     *
+     */
+    private function invalidMethodHandler()
+    {
+        header("{$this->request->serverProtocol} 405 Method Not Allowed");
+    }
+
+    /**
+     *
+     */
+    private function defaultRequestHandler()
+    {
+        //header("{$this->request->serverProtocol} 404 Not Found");
+    }
+
+    /**
+     * Resolves a route
+     */
+    public function resolve()
+    {
+        $methodDictionary = $this->{strtolower($this->request->requestMethod)};
+        $formatedRoute = $this->formatRoute($this->request->requestUri);
+        $method = $methodDictionary[$formatedRoute];
+
+        if ($method === null) {
+            $this->defaultRequestHandler();
+            return;
+        }
+
+        echo call_user_func_array($method, array($this->request));
+    }
+
+    /**
+     *
+     */
+    public function __destruct()
+    {
+        $this->resolve();
     }
 
 }
