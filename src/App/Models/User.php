@@ -11,13 +11,13 @@ class User extends Model
 
     public function login($login, $password)
     {
-        $v = $this->select(['password'])->where('username', $login)->get('fetchColumn');
+        $v = $this->select(['password'])->where('username', $login)->fetchColumn();
 
         return $password === $v;
     }
 
     public function is_admin($login)
     {
-        return $this->select(['is_admin'])->where('username', $login)->get('fetchColumn');
+        return $this->select(['is_admin'])->where('username', $login)->fetchColumn();
     }
 }

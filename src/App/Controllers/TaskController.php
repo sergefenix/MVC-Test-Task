@@ -23,9 +23,9 @@ class TaskController extends Controller
             $order = $_GET['order'];
             $paginator['val'] = $val;
             $paginator['order'] = $order;
-            $tasks = $tasks->select()->orderBy($val, $order)->paginate()->get();
+            $tasks = $tasks->select()->orderBy($val, $order)->paginate()->fetchAll();
         } else {
-            $tasks = $tasks->select()->paginate()->get();
+            $tasks = $tasks->select()->paginate()->fetchAll();
         }
 
         $data = ['tasks' => $tasks, 'cook' => ['user' => $this->cook, 'admin' => $this->is_admin], 'paginator' => $paginator];

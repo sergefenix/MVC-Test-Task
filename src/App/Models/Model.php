@@ -113,12 +113,21 @@ class Model
     }
 
     /**
-     * @param string $fetch
      * @return mixed
      */
-    public function get($fetch = 'fetchAll')
+    public function fetchAll()
     {
-        $result = $this->connect->query($this->query)->$fetch();
+        $result = $this->connect->query($this->query)->fetchAll();
+        $this->query = '';
+        return $result;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function fetchColumn()
+    {
+        $result = $this->connect->query($this->query)->fetchColumn();
         $this->query = '';
         return $result;
     }

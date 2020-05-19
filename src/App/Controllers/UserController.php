@@ -16,13 +16,12 @@ class UserController extends Controller
         $_POST['password'] = md5($_POST['password']);
         $user = new User($_POST);
 
-        $response = $user->select(['id'])->where('username', $_POST['username'])->get();
+        $response = $user->select(['id'])->where('username', $_POST['username'])->fetchAll();
 
         if (!$response) {
             $result = $user->save();
         } else {
-            echo 'This user already exist ';
-            die();
+            die('This user already exist');
         }
 
         if ($result) {
