@@ -19,7 +19,6 @@
       "App\\": "src/App/",
       "Components\\": "src/Components",
       "App\\Controller\\": "src/App/Controllers/",
-      "App\\Interfaces\\": "src/App/Interfaces/",
       "App\\Model\\": "src/App/Models/"
     }
   }

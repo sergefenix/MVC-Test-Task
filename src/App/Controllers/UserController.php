@@ -13,10 +13,11 @@ class UserController extends Controller
      */
     public function register()
     {
-        $_POST['password'] = md5($_POST['password']);
-        $user = new User($_POST);
+        $body = $this->request->getBody();
+        $body['password'] = md5($body['password']);
+        $user = new User($body);
 
-        $response = $user->select(['id'])->where('username', $_POST['username'])->fetchAll();
+        $response = $user->select(['id'])->where('username', $body['username'])->fetchAll();
 
         if (!$response) {
             $result = $user->save();
@@ -44,9 +45,9 @@ class UserController extends Controller
      */
     public function login_user()
     {
-
-        $password = md5($_POST['password']);
-        $username = $_POST['username'];
+        $body = $this->request->getBody();
+        $password = md5($body['password']);
+        $username = $body['username'];
         $user = new User();
 
         if ($user->login($username, $password)) {

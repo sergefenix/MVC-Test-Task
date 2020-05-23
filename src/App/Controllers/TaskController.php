@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use Components\Request;
 use App\Models\Task;
 use Exception;
 
@@ -14,13 +15,13 @@ class TaskController extends Controller
     public function home()
     {
         $tasks = new Task();
-
         $paginator = new Task();
+        $body = $this->request->getBody();
         $paginator = $paginator->page_paginator();
 
-        if (isset($_GET['val'], $_GET['order'])) {
-            $val = $_GET['val'];
-            $order = $_GET['order'];
+        if (isset($body['val'], $body['order'])) {
+            $val = $body['val'];
+            $order = $body['order'];
             $paginator['val'] = $val;
             $paginator['order'] = $order;
             $tasks = $tasks->select()->orderBy($val, $order)->paginate()->fetchAll();
@@ -46,9 +47,10 @@ class TaskController extends Controller
         $input_file['name'] = "{$rand}{$input_file['name']}";
 
         $name_file = $this->resize($input_file);
-        $_POST['img'] = $name_file;
+        $body = $this->request->getBody();
+        $body['img'] = $name_file;
 
-        $task = new Task($_POST);
+        $task = new Task($body);
         $result = $task->save();
 
         if ($result) {
@@ -74,7 +76,7 @@ class TaskController extends Controller
     public function delete_tasks()
     {
         if ($this->cook) {
-            $id = $_GET['id'];
+            $id = $this->request->getBody()['id'];
 
             $task = new Task();
             $val = $task->getOne($id);
@@ -98,7 +100,7 @@ class TaskController extends Controller
         if ($this->cook) {
 
             $task = new Task();
-            $task->update_status($_POST);
+            $task->update_status($this->request->getBody());
 
             header('Location: ' . '/TaskManager/');
         } else {
@@ -110,7 +112,7 @@ class TaskController extends Controller
 
     public function update_task_form()
     {
-        $id = $_GET['id'];
+        $id = $this->request->getBody()['id'];
         $task = new Task();
         $task = $task->getOne($id);
 
