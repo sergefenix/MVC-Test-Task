@@ -51,11 +51,11 @@ try {
 
     // Metagram routes
     $rout->get("{$path}Metagram", static function () use ($rout) {
-        $rout->createRoute('FindWayForWord', 'index');
+        $rout->createRoute('MetagramController', 'index');
     });
 
     $rout->post("{$path}Metagram/create", static function () use ($rout) {
-        $rout->createRoute('FindWayForWord', 'create');
+        $rout->createRoute('MetagramController', 'create');
     });
 
 } catch (Exception $e) {

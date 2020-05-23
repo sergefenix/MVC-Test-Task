@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-class FindWayForWord extends Controller
+class MetagramController extends Controller
 {
     private $words_passed;
     private $dictionary;
@@ -14,10 +14,11 @@ class FindWayForWord extends Controller
     {
         parent::__construct();
 
-        $this->first_word = '';
         $this->last_word = '';
-        $this->words_passed = [];
+        $this->first_word = '';
+
         $this->result_arr = [];
+        $this->words_passed = [];
 
         $dictionary = file_get_contents('./config/dictionary.php');
         $this->dictionary = explode("\n", $dictionary);
@@ -45,7 +46,7 @@ class FindWayForWord extends Controller
      * @param $last
      * @return bool
      */
-    public function LoadWords($first, $last): bool
+    public function loadWords($first, $last): bool
     {
         $this->first_word = $first;
         $this->last_word = $last;
@@ -58,15 +59,16 @@ class FindWayForWord extends Controller
      * @param $word
      * @return array
      */
-    public function FindChildren($word)
+    public function findChildren($word): array
     {
         $parent = preg_split('//u', $word, NULL, PREG_SPLIT_NO_EMPTY);
         $array_of_children = [];
         foreach ($this->dictionary as $item) {
             $j = 0;
-            if ($item == $this->first_word) {
+            if ($item === $this->first_word) {
                 continue;
             }
+
             $child = preg_split('//u', $item, NULL, PREG_SPLIT_NO_EMPTY);
 
             //Ищет слова у которых совпадает 3 буквы.
@@ -75,10 +77,12 @@ class FindWayForWord extends Controller
                     ++$j;
                 }
             }
-            if ($j == 3) {
+
+            if ($j === 3) {
                 $array_of_children[] = $item;
             }
         }
+
         if ($array_of_children) {
             return $array_of_children;
         }
@@ -86,16 +90,17 @@ class FindWayForWord extends Controller
     }
 
     /**
-     * @param array $array_of_childrens
+     * @param array $array_of_childes
      * @return array
      */
-    public function FindNewChildren($array_of_childrens)
+    public function findNewChildren($array_of_childes): array
     {
-        $array_of_childrens = $array_of_childrens ?? [];
-        $this->words_passed = array_unique(array_merge($this->words_passed, $array_of_childrens));
+        $array_of_childes = $array_of_childes ?? [];
+        $this->words_passed = array_unique(array_merge($this->words_passed, $array_of_childes));
         $good_children = [];
         $new_children = [];
-        foreach ($array_of_childrens as $word) {
+
+        foreach ($array_of_childes as $word) {
             $words = $this->FindChildren($word);
 
             if ($words === NULL) {
@@ -119,12 +124,12 @@ class FindWayForWord extends Controller
 
         foreach ($new_arr as $item) {
             foreach ($this->words_passed as $passed) {
-                if ($item == $passed) {
+                if ($item === $passed) {
                     $i = 1;
                 }
             }
 
-            if ($i != 1) {
+            if ($i !== 1) {
                 $good_children[] = $item;
             }
 
@@ -137,24 +142,53 @@ class FindWayForWord extends Controller
     /**
      * @return array
      */
-    public function PrintWay()
+    public function printWay(): array
     {
         $way = [];
         $count = 0;
         $way[] = $this->last_word;
 
         for ($i = count($this->result_arr) - 1; $i > 0; $i--) {
-            $minarr = $this->result_arr[$i];
+            $min_arr = $this->result_arr[$i];
 
-            foreach ($minarr as $val) {
-                if ($val == $way[$count]) {
-                    $way[] = $minarr[0];
+            foreach ($min_arr as $val) {
+                if ($val === $way[$count]) {
+                    $way[] = $min_arr[0];
                     $count++;
                 }
             }
         }
 
         return $way;
+    }
+
+    /**
+     * @param array $way
+     * @return array
+     */
+    public function deleteExtraWords(array $way)
+    {
+        $count = count($way) - 2;
+        $result = $way;
+
+        foreach ($way as $key => $word) {
+            $j = 0;
+            if ($key != $count) {
+                $first = preg_split('//u', $word, NULL, PREG_SPLIT_NO_EMPTY);
+                $second = preg_split('//u', $way[$key + 2], NULL, PREG_SPLIT_NO_EMPTY);
+                for ($i = 0; $i <= 3; $i++) {
+                    if ($first[$i] === $second[$i]) {
+                        ++$j;
+                    }
+                }
+
+                if ($j === 3) {
+                    unset($result[$key + 1]);
+                }
+            } else {
+                return $result;
+            }
+        }
     }
 
     /**
@@ -170,20 +204,24 @@ class FindWayForWord extends Controller
         $step_two = $this->FindNewChildren($step_one);
 
         for ($i = 0; $i < 100;) {
-            if ($k = array_search($this->last_word, $step_two)) {
+            if (in_array($this->last_word, $step_two, true)) {
 
                 $finish_way = $this->PrintWay();
                 $finish_way[] = $this->first_word;
                 $finish_way = array_reverse($finish_way);
+                $finish_way = $this->deleteExtraWords($finish_way);
 
                 return (implode('->', $finish_way));
             }
 
-            $step_two = $this->FindNewChildren($step_two);
-            $i++;
+            if ($step_two = $this->FindNewChildren($step_two)) {
+                $i++;
+            } else {
+                break;
+            }
         }
 
-        if (in_array($this->last_word, $step_one)) {
+        if (in_array($this->last_word, $step_one, true)) {
 
             return (implode('->', [$this->first_word, $this->last_word]));
         }
