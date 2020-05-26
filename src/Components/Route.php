@@ -7,8 +7,8 @@ use Exception;
 
 class Route
 {
-    private $router;
-    public $request;
+    private  $router;
+    public  $request;
 
     /**
      * Route constructor.
@@ -22,11 +22,11 @@ class Route
     /**
      * Route creator routes
      */
-    public function createRoutes()
+    public function createRoutes(): void
     {
         $match = $this->router->match();
-        $param = $match['params'];
-        $target = $match['target'];
+        $param = $match['params'] ?? null;
+        $target = $match['target'] ?? null;
 
         if ($match && is_callable($target)) {
             call_user_func_array($target, $param);
@@ -41,7 +41,7 @@ class Route
      * @param null $name
      * @throws Exception
      */
-    public function get($route, $target, $name = null)
+    public function get($route, $target, $name = null): void
     {
         $this->router->map('get', $route, $target, $name);
     }
@@ -52,7 +52,7 @@ class Route
      * @param null $name
      * @throws Exception
      */
-    public function post($route, $target, $name = null)
+    public function post($route, $target, $name = null): void
     {
         $this->router->map('post', $route, $target, $name);
     }
@@ -62,7 +62,7 @@ class Route
      * @param $action
      * @param null $param
      */
-    public function createRoute($controllerName, $action, $param = null)
+    public function createRoute($controllerName, $action, $param = null): void
     {
         $controllerName = "App\Controllers\\" . $controllerName;
 
@@ -83,9 +83,8 @@ class Route
     /**
      * Route 404 page
      */
-    public function create404()
+    public function create404(): void
     {
-        header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found', true, 404);
         include('resources/views/404.html.twig');
     }
 }

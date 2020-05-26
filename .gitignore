@@ -6,3 +6,4 @@ composer.lock
 tmp
 dayside
 public/downloads
+.phpunit.result.cache

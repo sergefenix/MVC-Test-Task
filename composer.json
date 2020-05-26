@@ -6,20 +6,24 @@
     "twbs/bootstrap": "^3.3",
     "ext-pdo": "*",
     "ext-mbstring": "*",
-    "ext-gd": "*"
+    "ext-gd": "*",
+    "phpunit/phpunit": "^8.5",
+    "filp/whoops": "^2.7"
   },
   "require-dev": {
     "roave/security-advisories": "dev-master"
   },
   "autoload": {
     "files": [
-      "config/routes.php"
+      "config/routes.php",
+      "config/errors.php"
     ],
     "psr-4": {
       "App\\": "src/App/",
       "Components\\": "src/Components",
       "App\\Controller\\": "src/App/Controllers/",
-      "App\\Model\\": "src/App/Models/"
+      "App\\Model\\": "src/App/Models/",
+      "Tests\\": "tests/"
     }
   }
 }
