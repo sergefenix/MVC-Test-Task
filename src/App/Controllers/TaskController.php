@@ -2,7 +2,6 @@
 
 namespace App\Controllers;
 
-use Components\Request;
 use App\Models\Task;
 use Exception;
 
@@ -12,7 +11,7 @@ class TaskController extends Controller
     /**
      * Redirect on home page
      */
-    public function home()
+    public function home() : void
     {
         $tasks = new Task();
         $paginator = new Task();
@@ -39,7 +38,7 @@ class TaskController extends Controller
      * Create task method
      * @throws Exception
      */
-    public function create()
+    public function create(): ?bool
     {
 
         $input_file = $_FILES['InputFile'];
@@ -63,7 +62,7 @@ class TaskController extends Controller
     /**
      * Redirect on create task form
      */
-    public function create_form()
+    public function create_form() : void
     {
         $data = ['cook' => $this->cook];
 
@@ -73,7 +72,7 @@ class TaskController extends Controller
     /**
      *  Method for delete task
      */
-    public function delete_tasks()
+    public function delete_tasks() : void
     {
         if ($this->cook) {
             $id = $this->request->getBody()['id'];
@@ -94,7 +93,7 @@ class TaskController extends Controller
     /**
      *  Method for update task status
      */
-    public function update_tasks()
+    public function update_tasks() : void
     {
 
         if ($this->cook) {
@@ -110,7 +109,7 @@ class TaskController extends Controller
 
     }
 
-    public function update_task_form()
+    public function update_task_form() : void
     {
         $id = $this->request->getBody()['id'];
         $task = new Task();

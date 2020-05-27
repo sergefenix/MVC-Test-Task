@@ -4,10 +4,10 @@ namespace App\Controllers;
 
 class MetagramController extends Controller
 {
-    private  $words_passed;
-    private  $first_word;
-    private  $result_arr;
-    private  $last_word;
+    private $words_passed;
+    private $first_word;
+    private $result_arr;
+    private $last_word;
     private $dictionary;
 
     public function __construct()
