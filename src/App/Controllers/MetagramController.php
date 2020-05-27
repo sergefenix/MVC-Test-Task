@@ -63,15 +63,12 @@ class MetagramController extends Controller
     {
         $parent = preg_split('//u', $word, NULL, PREG_SPLIT_NO_EMPTY);
         $array_of_children = [];
-        foreach ($this->dictionary as $item) {
-            $j = 0;
-            if ($item === $this->first_word) {
-                continue;
-            }
 
+        foreach ($this->dictionary as $item) {
+
+            $j = 0;
             $child = preg_split('//u', $item, NULL, PREG_SPLIT_NO_EMPTY);
 
-            //Ищет слова у которых совпадает 3 буквы.
             for ($i = 0; $i <= 3; $i++) {
                 if ($parent[$i] === $child[$i]) {
                     ++$j;
@@ -86,6 +83,7 @@ class MetagramController extends Controller
         if ($array_of_children) {
             return $array_of_children;
         }
+
         return [];
     }
 
@@ -98,11 +96,12 @@ class MetagramController extends Controller
         $this->words_passed = array_unique(array_merge($this->words_passed, $array_of_childes));
         $good_children = [];
         $new_children = [];
+        $j = 0;
 
         foreach ($array_of_childes as $word) {
             $words = $this->FindChildren($word);
 
-            if ($words === NULL) {
+            if (!$words) {
                 continue;
             }
 
@@ -114,25 +113,21 @@ class MetagramController extends Controller
         $new_arr = [];
 
         for ($i = 1; $i < $j; $i++) {
-            $arr = array_merge($new_children[$i - 1], $new_children[$i]);
-            $new_arr = array_merge($arr, $new_arr);
+            $new_arr = array_unique(array_merge($new_children[$i - 1], $new_children[$i], $new_arr));
         }
-
-        $new_arr = array_unique($new_arr, SORT_STRING);
-        $i = 0;
 
         foreach ($new_arr as $item) {
             foreach ($this->words_passed as $passed) {
                 if ($item === $passed) {
-                    $i = 1;
+                    $j = 1;
                 }
             }
 
-            if ($i !== 1) {
+            if ($j !== 1) {
                 $good_children[] = $item;
             }
 
-            $i = 0;
+            $j = 0;
         }
 
         return array_unique($good_children, SORT_STRING);
@@ -158,7 +153,8 @@ class MetagramController extends Controller
             }
         }
 
-        return $way;
+        $way[] = $this->first_word;
+        return $this->deleteExtraWords(array_reverse($way));
     }
 
     /**
@@ -173,8 +169,10 @@ class MetagramController extends Controller
         foreach ($way as $key => $word) {
             $j = 0;
             if ($key != $count) {
+
                 $first = preg_split('//u', $word, NULL, PREG_SPLIT_NO_EMPTY);
                 $second = preg_split('//u', $way[$key + 2], NULL, PREG_SPLIT_NO_EMPTY);
+
                 for ($i = 0; $i <= 3; $i++) {
                     if ($first[$i] === $second[$i]) {
                         ++$j;
@@ -204,13 +202,7 @@ class MetagramController extends Controller
 
         for ($i = 0; $i < 100;) {
             if (in_array($this->last_word, $step_two, true)) {
-
-                $finish_way = $this->PrintWay();
-                $finish_way[] = $this->first_word;
-                $finish_way = array_reverse($finish_way);
-                $finish_way = $this->deleteExtraWords($finish_way);
-
-                return (implode('->', $finish_way));
+                return (implode('->', $this->PrintWay()));
             }
 
             if ($step_two = $this->FindNewChildren($step_two)) {
