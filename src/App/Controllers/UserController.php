@@ -11,7 +11,7 @@ class UserController extends Controller
      * @return bool
      * Register user method
      */
-    public function register()
+    public function register(): ?bool
     {
         $body = $this->request->getBody();
         $body['password'] = md5($body['password']);

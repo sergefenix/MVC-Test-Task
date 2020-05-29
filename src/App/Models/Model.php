@@ -2,22 +2,23 @@
 
 namespace App\Models;
 
-use PDO;
 use Components\DBComponent;
+use PDOStatement;
+use PDO;
 
 class Model
 {
     public $id;
 
-    private $query;
+    private $page;
 
-    protected $connect;
+    private $query;
 
     protected $table;
 
-    protected $per_page;
+    protected $connect;
 
-    private $page;
+    protected $per_page;
 
     /**
      * Model constructor.
@@ -54,14 +55,12 @@ class Model
     public function getAll()
     {
         $sql = "SELECT * FROM $this->table ORDER by id desc LIMIT 0, $this->per_page";
-
         return $this->connect->query($sql)->fetchAll(PDO::FETCH_CLASS, static::class);
     }
 
     public function getOne($id)
     {
         $sql = "SELECT * FROM $this->table WHERE `id` = $id";
-
         return $this->connect->query($sql)->fetchAll();
     }
 
@@ -71,8 +70,8 @@ class Model
      */
     public function select(array $args = ['*']): self
     {
-        $args = implode(', ', $args);
 
+        $args = implode(', ', $args);
         $this->query = "SELECT $args FROM $this->table ";
 
         return $this;
@@ -86,7 +85,6 @@ class Model
     public function where($prop, $val): self
     {
         $this->query .= "WHERE `$prop` = '$val'";
-
         return $this;
     }
 
@@ -96,7 +94,6 @@ class Model
     public function getCount()
     {
         $sql = "SELECT count(*) as total from $this->table";
-
         return $this->connect->query($sql)->fetchColumn();
     }
 
@@ -108,7 +105,6 @@ class Model
     public function orderBy($order = 'id', $sort = 'desc'): self
     {
         $this->query .= "ORDER BY $order $sort";
-
         return $this;
     }
 
@@ -168,17 +164,20 @@ class Model
     }
 
     /**
-     * @param array $properties
+     * @param $column
+     * @param $value
+     * @param $condition
+     * @return false|PDOStatement
      */
-    public function update(array $properties)
+    public function update($column, $value, $condition)
     {
-
+        $sql = "UPDATE $this->table SET $column = $value " . $condition;
+        return $this->connect->query($sql);
     }
 
     public function delete($id)
     {
         $sql = "DELETE FROM $this->table WHERE id = $id";
-
         return $this->connect->query($sql)->execute();
     }
 
@@ -205,7 +204,6 @@ class Model
             [
                 'page'       => $this->page,
                 'total_page' => $total_pages
-
             ];
     }
 }

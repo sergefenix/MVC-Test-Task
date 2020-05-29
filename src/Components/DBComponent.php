@@ -7,7 +7,10 @@ use PDOException;
 
 class DBComponent
 {
-    public static function Connection()
+    /**
+     * @return PDO
+     */
+    public static function Connection(): PDO
     {
         $paramsPath = 'config/db_params.php';
         $params = include($paramsPath);
@@ -25,7 +28,12 @@ class DBComponent
         return $db;
     }
 
-    public static function query($query, $params = [])
+    /**
+     * @param $query
+     * @param array $params
+     * @return array|null
+     */
+    public static function query($query, $params = []): ?array
     {
         $statement = self::Connection()->prepare($query);
         $statement->execute($params);

@@ -12,6 +12,9 @@ class Controller
     protected $request;
     protected $is_admin;
 
+    /**
+     * Controller constructor.
+     */
     public function __construct()
     {
         $template = ['resources/views/templates', 'resources/views'];

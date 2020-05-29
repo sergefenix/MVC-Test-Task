@@ -5,10 +5,14 @@ namespace App\Controllers;
 class MetagramController extends Controller
 {
     private $words_passed;
+
     private $first_word;
+
     private $result_arr;
-    private $last_word;
+
     private $dictionary;
+
+    private $last_word;
 
     public function __construct()
     {
@@ -26,7 +30,7 @@ class MetagramController extends Controller
 
     public function index(): void
     {
-        $data = ['cook' => $this->cook];
+        $data = ['cook' => ['user' => $this->cook, 'admin' => $this->is_admin]];
         $this->view->render('metagram.html.twig', $data);
     }
 
@@ -96,7 +100,6 @@ class MetagramController extends Controller
         $this->words_passed = array_unique(array_merge($this->words_passed, $array_of_childes));
         $good_children = [];
         $new_children = [];
-        $j = 0;
 
         foreach ($array_of_childes as $word) {
             $words = $this->FindChildren($word);
@@ -161,7 +164,7 @@ class MetagramController extends Controller
      * @param array $way
      * @return array
      */
-    public function deleteExtraWords(array $way): ?array
+    public function deleteExtraWords(array $way): array
     {
         $count = count($way) - 2;
         $result = $way;
@@ -186,6 +189,8 @@ class MetagramController extends Controller
                 return $result;
             }
         }
+
+        return $result;
     }
 
     /**
@@ -213,7 +218,6 @@ class MetagramController extends Controller
         }
 
         if (in_array($this->last_word, $step_one, true)) {
-
             return (implode('->', [$this->first_word, $this->last_word]));
         }
 

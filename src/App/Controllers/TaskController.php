@@ -64,8 +64,7 @@ class TaskController extends Controller
      */
     public function create_form() : void
     {
-        $data = ['cook' => $this->cook];
-
+        $data = ['cook' => ['user' => $this->cook, 'admin' => $this->is_admin]];
         $this->view->render('create_task.html.twig', $data);
     }
 
@@ -95,7 +94,6 @@ class TaskController extends Controller
      */
     public function update_tasks() : void
     {
-
         if ($this->cook) {
 
             $task = new Task();
@@ -115,7 +113,7 @@ class TaskController extends Controller
         $task = new Task();
         $task = $task->getOne($id);
 
-        $data = ['cook' => $this->cook, 'task' => $task[0]];
+        $data = ['cook' => ['user' => $this->cook, 'admin' => $this->is_admin], 'task' => $task[0]];
 
         $this->view->render('update_task.html.twig', $data);
     }
