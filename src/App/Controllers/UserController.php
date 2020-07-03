@@ -51,7 +51,6 @@ class UserController extends Controller
         $user = new User();
 
         if ($user->login($username, $password)) {
-
             setcookie('user', $username, time() + 3600, '/');
 
             if ($user->is_admin($username)) {
@@ -63,13 +62,12 @@ class UserController extends Controller
             echo 'This user not found !';
             die();
         }
-
     }
 
     /**
      * Logout method
      */
-    public function logout()
+    public function logout(): void
     {
         setcookie('user', '', time() - 3600, '/');
         setcookie('admin', '', time() - 3600, '/');

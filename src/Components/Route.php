@@ -7,8 +7,8 @@ use Exception;
 
 class Route
 {
-    private  $router;
-    public  $request;
+    private $router;
+    public $request;
 
     /**
      * Route constructor.
@@ -36,9 +36,10 @@ class Route
     }
 
     /**
-     * @param $route
-     * @param $target
+     * @param      $route
+     * @param      $target
      * @param null $name
+     *
      * @throws Exception
      */
     public function get($route, $target, $name = null): void
@@ -47,9 +48,10 @@ class Route
     }
 
     /**
-     * @param $route
-     * @param $target
+     * @param      $route
+     * @param      $target
      * @param null $name
+     *
      * @throws Exception
      */
     public function post($route, $target, $name = null): void
@@ -58,8 +60,8 @@ class Route
     }
 
     /**
-     * @param $controllerName
-     * @param $action
+     * @param      $controllerName
+     * @param      $action
      * @param null $param
      */
     public function createRoute($controllerName, $action, $param = null): void
@@ -67,7 +69,6 @@ class Route
         $controllerName = "App\Controllers\\" . $controllerName;
 
         if (class_exists($controllerName)) {
-
             $controller = new $controllerName();
 
             if (method_exists($controller, $action) && $param === null) {

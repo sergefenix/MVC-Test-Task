@@ -11,7 +11,7 @@ class TaskController extends Controller
     /**
      * Redirect on home page
      */
-    public function home() : void
+    public function home(): void
     {
         $tasks = new Task();
         $paginator = new Task();
@@ -28,9 +28,12 @@ class TaskController extends Controller
             $tasks = $tasks->select()->paginate()->fetchAll();
         }
 
-        $data = ['tasks' => $tasks, 'cook' => ['user' => $this->cook, 'admin' => $this->is_admin], 'paginator' => $paginator];
-        $this->view->render('tasks.html.twig', $data);
+        $data = ['tasks'     => $tasks,
+                 'cook'      => ['user' => $this->cook, 'admin' => $this->is_admin],
+                 'paginator' => $paginator
+        ];
 
+        $this->view->render('tasks.html.twig', $data);
     }
 
     /**
@@ -40,7 +43,6 @@ class TaskController extends Controller
      */
     public function create(): ?bool
     {
-
         $input_file = $_FILES['InputFile'];
         $rand = random_int(1000, 10000);
         $input_file['name'] = "{$rand}{$input_file['name']}";
@@ -62,7 +64,7 @@ class TaskController extends Controller
     /**
      * Redirect on create task form
      */
-    public function create_form() : void
+    public function create_form(): void
     {
         $data = ['cook' => ['user' => $this->cook, 'admin' => $this->is_admin]];
         $this->view->render('create_task.html.twig', $data);
@@ -71,7 +73,7 @@ class TaskController extends Controller
     /**
      *  Method for delete task
      */
-    public function delete_tasks() : void
+    public function delete_tasks(): void
     {
         if ($this->cook) {
             $id = $this->request->getBody()['id'];
@@ -92,10 +94,9 @@ class TaskController extends Controller
     /**
      *  Method for update task status
      */
-    public function update_tasks() : void
+    public function update_tasks(): void
     {
         if ($this->cook) {
-
             $task = new Task();
             $task->update_status($this->request->getBody());
 
@@ -104,10 +105,9 @@ class TaskController extends Controller
             echo 'This user does not have the necessary privileges';
             die();
         }
-
     }
 
-    public function update_task_form() : void
+    public function update_task_form(): void
     {
         $id = $this->request->getBody()['id'];
         $task = new Task();
@@ -119,9 +119,10 @@ class TaskController extends Controller
     }
 
     /**
-     * @param $file
+     * @param     $file
      * @param int $type
      * @param int $quality
+     *
      * @return bool
      */
     public function resize($file, $type = 1, $quality = 90)

@@ -8,6 +8,7 @@ use PDO;
 
 class Model
 {
+
     public $id;
 
     private $page;
@@ -22,6 +23,7 @@ class Model
 
     /**
      * Model constructor.
+     *
      * @param array $params
      */
     public function __construct(array $params = [])
@@ -66,11 +68,11 @@ class Model
 
     /**
      * @param array $args
+     *
      * @return Model
      */
     public function select(array $args = ['*']): self
     {
-
         $args = implode(', ', $args);
         $this->query = "SELECT $args FROM $this->table ";
 
@@ -80,6 +82,7 @@ class Model
     /**
      * @param $prop
      * @param $val
+     *
      * @return $this
      */
     public function where($prop, $val): self
@@ -100,6 +103,7 @@ class Model
     /**
      * @param string $order
      * @param string $sort
+     *
      * @return Model
      */
     public function orderBy($order = 'id', $sort = 'desc'): self
@@ -155,7 +159,6 @@ class Model
         $sql = substr_replace($sql, ')', -2);
         $result = $this->connect->query($sql);
 
-
         if ($result) {
             return true;
         }
@@ -167,6 +170,7 @@ class Model
      * @param $column
      * @param $value
      * @param $condition
+     *
      * @return false|PDOStatement
      */
     public function update($column, $value, $condition)

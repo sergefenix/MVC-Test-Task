@@ -29,8 +29,9 @@ class DBComponent
     }
 
     /**
-     * @param $query
+     * @param       $query
      * @param array $params
+     *
      * @return array|null
      */
     public static function query($query, $params = []): ?array

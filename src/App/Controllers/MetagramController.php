@@ -34,7 +34,6 @@ class MetagramController extends Controller
         $this->view->render('metagram.html.twig', $data);
     }
 
-
     public function create(): void
     {
         $first_word = trim(strip_tags($_POST['first_word']));
@@ -49,6 +48,7 @@ class MetagramController extends Controller
     /**
      * @param $first
      * @param $last
+     *
      * @return void
      */
     public function loadWords($first, $last): void
@@ -61,17 +61,17 @@ class MetagramController extends Controller
 
     /**
      * @param $word
+     *
      * @return array
      */
     public function findChildren($word): array
     {
-        $parent = preg_split('//u', $word, NULL, PREG_SPLIT_NO_EMPTY);
+        $parent = preg_split('//u', $word, null, PREG_SPLIT_NO_EMPTY);
         $array_of_children = [];
 
         foreach ($this->dictionary as $item) {
-
             $j = 0;
-            $child = preg_split('//u', $item, NULL, PREG_SPLIT_NO_EMPTY);
+            $child = preg_split('//u', $item, null, PREG_SPLIT_NO_EMPTY);
 
             for ($i = 0; $i <= 3; $i++) {
                 if ($parent[$i] === $child[$i]) {
@@ -93,6 +93,7 @@ class MetagramController extends Controller
 
     /**
      * @param array $array_of_childes
+     *
      * @return array
      */
     public function findNewChildren($array_of_childes): array
@@ -162,6 +163,7 @@ class MetagramController extends Controller
 
     /**
      * @param array $way
+     *
      * @return array
      */
     public function deleteExtraWords(array $way): array
@@ -172,9 +174,8 @@ class MetagramController extends Controller
         foreach ($way as $key => $word) {
             $j = 0;
             if ($key != $count) {
-
-                $first = preg_split('//u', $word, NULL, PREG_SPLIT_NO_EMPTY);
-                $second = preg_split('//u', $way[$key + 2], NULL, PREG_SPLIT_NO_EMPTY);
+                $first = preg_split('//u', $word, null, PREG_SPLIT_NO_EMPTY);
+                $second = preg_split('//u', $way[$key + 2], null, PREG_SPLIT_NO_EMPTY);
 
                 for ($i = 0; $i <= 3; $i++) {
                     if ($first[$i] === $second[$i]) {
